@@ -29,5 +29,7 @@ namespace SpeedTyper.WebUI.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<SpeedTyper.DataObjects.TestResult> TestResults { get; set; }
     }
 }
