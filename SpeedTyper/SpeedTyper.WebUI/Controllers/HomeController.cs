@@ -6,6 +6,9 @@ using System.Web.Mvc;
 
 namespace SpeedTyper.WebUI.Controllers
 {
+    #if !DEBUG
+    [RequireHttps]
+    #endif
     public class HomeController : Controller
     {
         public ActionResult Index()

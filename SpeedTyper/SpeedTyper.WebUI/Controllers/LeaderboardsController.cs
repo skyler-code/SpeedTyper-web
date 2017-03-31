@@ -12,6 +12,9 @@ using SpeedTyper.LogicLayer;
 
 namespace SpeedTyper.WebUI.Controllers
 {
+#if !DEBUG
+    [RequireHttps]
+#endif
     public class LeaderboardsController : Controller
     {
         TestManager testManager = new TestManager();
