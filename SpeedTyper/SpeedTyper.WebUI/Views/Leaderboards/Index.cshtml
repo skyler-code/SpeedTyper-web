@@ -1,42 +1,33 @@
-﻿@model IEnumerable<SpeedTyper.DataObjects.TestResult>
-@{ SpeedTyper.LogicLayer.RankManager rankManager = new SpeedTyper.LogicLayer.RankManager();}
-
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
 
-<table class="table">
-    <tr>
-        <th>Rank</th>
-        <th>@Html.DisplayNameFor(model => model.DisplayName)</th>
-        <th>@Html.DisplayNameFor(model => model.RankID)</th>
-        <th>@Html.DisplayNameFor(model => model.WPM)</th>
-        <th>@Html.DisplayNameFor(model => model.Date)</th>
-    </tr>
-    @{ int count = 1;}
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@count.</td>
-            <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
-            <td>
-                @{var source = "";}
-                @if (item.RankID < 10)
-                {
-                    source = "../Content/Icons/Rank0" + item.RankID + ".png";
-                }
-                else
-                {
-                    source = "../Content/Icons/Rank" + item.RankID + ".png";
-                }
-                @{ var rankName = rankManager.RetrieveUserRankName(item.RankID);}
-                <img src=@source alt="@rankName" title="@rankName" />
-            </td>
-            <td>@Html.DisplayFor(modelItem => item.WPM)</td>
-            <td>@Html.DisplayFor(modelItem => item.Date)</td>
-        </tr>
-                        count++;
-                    }
-</table>
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#menuAll">All</a></li>
+    <li><a data-toggle="tab" href="#menu90">90 Days</a></li>
+    <li><a data-toggle="tab" href="#menu30">30 Days</a></li>
+    <li><a data-toggle="tab" href="#menuToday">Today</a></li>
+    <li><a data-toggle="tab" href="#menuHighestLevel">Highest Level</a></li>
+</ul> 
+<div class="tab-content">
+    <div id="menuAll" class="tab-pane fade in active">
+        @Html.Action("AllTopResults", "Leaderboards")
+    </div>
+    <div id="menu90" class="tab-pane fade">
+        @Html.Action("Top90DaysResults", "Leaderboards")
+    </div>
+    <div id="menu30" class="tab-pane fade">
+        @Html.Action("Top30DaysResults", "Leaderboards")
+    </div>
+    <div id="menuToday" class="tab-pane fade">
+        @Html.Action("TodaysResults", "Leaderboards")
+    </div>
+    <div id="menuHighestLevel" class="tab-pane fade">
+        @Html.Action("HighestRankingMembers", "Leaderboards")
+    </div>
+
+
+</div>
+

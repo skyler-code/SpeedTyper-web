@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SpeedTyper.DataObjects.User>
+@{ SpeedTyper.LogicLayer.RankManager rankManager = new SpeedTyper.LogicLayer.RankManager();}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DisplayName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RankID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentXP)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisplayName)
+        </td>
+        <td>
+            @{var source = "";}
+            @if (item.RankID < 10)
+                {
+                    source = "../Content/Icons/Rank0" + item.RankID + ".png";
+                }
+                else
+                {
+                    source = "../Content/Icons/Rank" + item.RankID + ".png";
+                }
+            @{ var rankName = rankManager.RetrieveUserRankName(item.RankID);}
+            <img src=@source alt="@rankName" title="@rankName" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentXP)
+        </td>
+    </tr>
+}
+
+</table>

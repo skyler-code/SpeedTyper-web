@@ -18,13 +18,14 @@ namespace SpeedTyper.WebUI.Controllers
     public class LeaderboardsController : Controller
     {
         TestManager testManager = new TestManager();
+        UserManager userManager = new UserManager();
 
         // GET: TestResults
         public ActionResult Index()
         {
             try
             {
-                return View(testManager.GetAllTopTestResults());
+                return View();
             }
             catch
             {
@@ -32,19 +33,29 @@ namespace SpeedTyper.WebUI.Controllers
             }
         }
 
-        // GET: TestResults/Details/5
-        public ActionResult Details(int? id)
+        public PartialViewResult AllTopResults()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TestResult testResult = testManager.GetTop10TestResults()[0];
-            if (testResult == null)
-            {
-                return HttpNotFound();
-            }
-            return View(testResult);
+            return PartialView("TestResults", testManager.GetAllTopTestResults());
+        }
+
+        public PartialViewResult Top30DaysResults()
+        {
+            return PartialView("TestResults", testManager.GetTop30DaysResults());
+        }
+
+        public PartialViewResult Top90DaysResults()
+        {
+            return PartialView("TestResults", testManager.GetTop90DaysResults());
+        }
+
+        public PartialViewResult TodaysResults()
+        {
+            return PartialView("TestResults", testManager.GetTodaysResults());
+        }
+
+        public PartialViewResult HighestRankingMembers()
+        {
+            return PartialView("HighestRankingMembers", userManager.RetrieveHighestRankingMembers());
         }
     }
 }

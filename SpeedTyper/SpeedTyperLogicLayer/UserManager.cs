@@ -4,6 +4,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace SpeedTyper.LogicLayer
 {
@@ -235,6 +236,20 @@ namespace SpeedTyper.LogicLayer
                 throw;
             }
             return Tuple.Create(user, levelsEarned, titleEarned);
+        }
+
+        public List<User> RetrieveHighestRankingMembers()
+        {
+            var returnList = new List<User>();
+            try
+            {
+                returnList = UserAccessor.LoadHighestRankingMembers();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return returnList;
         }
     }
 }
