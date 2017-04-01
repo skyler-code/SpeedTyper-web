@@ -1,9 +1,5 @@
-﻿@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
+﻿@{ ViewBag.Title = "Leaderboards";}
+<h2>@ViewBag.Title</h2>
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#menuAll">All</a></li>
     <li><a data-toggle="tab" href="#menu90">90 Days</a></li>
@@ -27,7 +23,4 @@
     <div id="menuHighestLevel" class="tab-pane fade">
         @Html.Action("HighestRankingMembers", "Leaderboards")
     </div>
-
-
 </div>
-

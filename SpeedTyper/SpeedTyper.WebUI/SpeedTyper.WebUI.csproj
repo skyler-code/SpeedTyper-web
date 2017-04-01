@@ -197,7 +197,7 @@
     <Content Include="Content\Icons\Rank12.png" />
     <Content Include="Content\Icons\Rank13.png" />
     <Content Include="Content\Icons\Rank14.png" />
-    <Content Include="Content\Icons\Rank15.ico" />
+    <Content Include="Content\Icons\favicon.ico" />
     <Content Include="Content\Icons\Rank15.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
