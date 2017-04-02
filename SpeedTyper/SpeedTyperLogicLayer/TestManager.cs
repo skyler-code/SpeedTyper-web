@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SpeedTyper.LogicLayer
 {
-    public class TestManager
+    public class TestManager : ITestManager
     {
 
         public string SecondsToTimeSpanFormatter(int seconds)

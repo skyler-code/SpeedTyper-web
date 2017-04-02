@@ -4,7 +4,7 @@ using System;
 
 namespace SpeedTyper.LogicLayer
 {
-    public class LevelManager
+    public class LevelManager : ILevelManager
     {
         public int CalculateXP(decimal WPM, decimal WPMXPModifier, decimal timeXPModifier)
         {

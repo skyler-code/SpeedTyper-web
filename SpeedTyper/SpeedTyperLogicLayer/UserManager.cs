@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SpeedTyper.LogicLayer
 {
-    public class UserManager
+    public class UserManager : IUserManager
     {
         internal string HashSHA256(string source)
         {

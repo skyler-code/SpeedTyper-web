@@ -17,8 +17,14 @@ namespace SpeedTyper.WebUI.Controllers
 #endif
     public class LeaderboardsController : Controller
     {
-        TestManager testManager = new TestManager();
-        UserManager userManager = new UserManager();
+        ITestManager _testManager;
+        IUserManager _userManager;
+
+        public LeaderboardsController(ITestManager testManager, IUserManager userManager)
+        {
+            _testManager = testManager;
+            _userManager = userManager;
+        }
 
         // GET: TestResults
         public ActionResult Index()
@@ -35,27 +41,27 @@ namespace SpeedTyper.WebUI.Controllers
 
         public PartialViewResult AllTopResults()
         {
-            return PartialView("TestResults", testManager.GetAllTopTestResults());
+            return PartialView("TestResults", _testManager.GetAllTopTestResults());
         }
 
         public PartialViewResult Top30DaysResults()
         {
-            return PartialView("TestResults", testManager.GetTop30DaysResults());
+            return PartialView("TestResults", _testManager.GetTop30DaysResults());
         }
 
         public PartialViewResult Top90DaysResults()
         {
-            return PartialView("TestResults", testManager.GetTop90DaysResults());
+            return PartialView("TestResults", _testManager.GetTop90DaysResults());
         }
 
         public PartialViewResult TodaysResults()
         {
-            return PartialView("TestResults", testManager.GetTodaysResults());
+            return PartialView("TestResults", _testManager.GetTodaysResults());
         }
 
         public PartialViewResult HighestRankingMembers()
         {
-            return PartialView("HighestRankingMembers", userManager.RetrieveHighestRankingMembers());
+            return PartialView("HighestRankingMembers", _userManager.RetrieveHighestRankingMembers());
         }
     }
 }

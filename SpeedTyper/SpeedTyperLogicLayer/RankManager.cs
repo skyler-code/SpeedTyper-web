@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace SpeedTyper.LogicLayer
 {
-    public class RankManager
+    public class RankManager : IRankManager
     {
         private List<Rank> _ranks = null;
 
