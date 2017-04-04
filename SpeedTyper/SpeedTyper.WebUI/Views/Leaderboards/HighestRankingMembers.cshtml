@@ -1,20 +1,20 @@
-﻿@model IEnumerable<SpeedTyper.DataObjects.User>
-@{ SpeedTyper.LogicLayer.IRankManager rankManager = new SpeedTyper.LogicLayer.RankManager();}
+﻿@model SpeedTyper.WebUI.Models.LeaderboardViewModels.HighestRankedPlayersModel
+@{ System.Collections.Generic.List<SpeedTyper.DataObjects.Rank> rankList = Model.Ranks;}
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.DisplayName)
+            @Html.DisplayNameFor(model => model.TopPlayers.FirstOrDefault().DisplayName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RankID)
+            @Html.DisplayNameFor(model => model.TopPlayers.FirstOrDefault().RankID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CurrentXP)
+            @Html.DisplayNameFor(model => model.TopPlayers.FirstOrDefault().CurrentXP)
         </th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.TopPlayers) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.DisplayName)
@@ -29,7 +29,7 @@
                 {
                     source = "../Content/Icons/Rank" + item.RankID + ".png";
                 }
-            @{ var rankName = rankManager.RetrieveUserRankName(item.RankID);}
+            @{ var rankName = rankList.Find(r => r.RankID == item.RankID);}
             <img src=@source alt="@rankName" title="@rankName" />
         </td>
         <td>

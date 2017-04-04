@@ -2,7 +2,7 @@
 using SpeedTyper.DataObjects;
 using System;
 using System.Collections.Generic;
-using System.Windows.Media;
+using System.Web.Caching;
 
 namespace SpeedTyper.LogicLayer
 {
@@ -11,16 +11,20 @@ namespace SpeedTyper.LogicLayer
         private List<Rank> _ranks = null;
 
 
-        public void RetrieveUserRanks()
+        public List<Rank> RetrieveUserRanks()
         {
             try
             {
-                _ranks = UserAccessor.RetrieveUserRankNames();
+                if (_ranks == null)
+                {
+                    _ranks = UserAccessor.RetrieveUserRankNames();
+                }
             }
             catch (Exception)
             {
                 throw;
             }
+            return _ranks;
         }
 
         public string RetrieveUserRankName(int rankID)

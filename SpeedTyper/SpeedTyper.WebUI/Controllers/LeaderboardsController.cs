@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using SpeedTyper.DataObjects;
-using SpeedTyper.WebUI.Models;
 using SpeedTyper.LogicLayer;
+using SpeedTyper.WebUI.Models;
 
 namespace SpeedTyper.WebUI.Controllers
 {
@@ -19,11 +14,13 @@ namespace SpeedTyper.WebUI.Controllers
     {
         ITestManager _testManager;
         IUserManager _userManager;
+        IRankManager _rankManager;
 
-        public LeaderboardsController(ITestManager testManager, IUserManager userManager)
+        public LeaderboardsController(ITestManager testManager, IUserManager userManager, IRankManager rankManager)
         {
             _testManager = testManager;
             _userManager = userManager;
+            _rankManager = rankManager;
         }
 
         // GET: TestResults
@@ -41,27 +38,61 @@ namespace SpeedTyper.WebUI.Controllers
 
         public PartialViewResult AllTopResults()
         {
-            return PartialView("TestResults", _testManager.GetAllTopTestResults());
+            var topResults = new LeaderboardViewModels.TestResultsModel()
+            {
+                TopTestResults = _testManager.GetAllTopTestResults(),
+                Ranks = cachedRanks()
+            };
+            return PartialView("TestResults", topResults);
         }
 
         public PartialViewResult Top30DaysResults()
         {
-            return PartialView("TestResults", _testManager.GetTop30DaysResults());
+            var topResults = new LeaderboardViewModels.TestResultsModel()
+            {
+                TopTestResults = _testManager.GetTop30DaysResults(),
+                Ranks = cachedRanks()
+            };
+            return PartialView("TestResults", topResults);
         }
 
         public PartialViewResult Top90DaysResults()
         {
-            return PartialView("TestResults", _testManager.GetTop90DaysResults());
+            var topResults = new LeaderboardViewModels.TestResultsModel()
+            {
+                TopTestResults = _testManager.GetTop90DaysResults(),
+                Ranks = cachedRanks()
+            };
+            return PartialView("TestResults", topResults);
         }
 
         public PartialViewResult TodaysResults()
         {
-            return PartialView("TestResults", _testManager.GetTodaysResults());
+            var topResults = new LeaderboardViewModels.TestResultsModel()
+            {
+                TopTestResults = _testManager.GetTodaysResults(),
+                Ranks = cachedRanks()
+            };
+            return PartialView("TestResults", topResults);
         }
 
         public PartialViewResult HighestRankingMembers()
         {
-            return PartialView("HighestRankingMembers", _userManager.RetrieveHighestRankingMembers());
+            var topResults = new LeaderboardViewModels.HighestRankedPlayersModel
+            {
+                TopPlayers = _userManager.RetrieveHighestRankingMembers(),
+                Ranks = cachedRanks()
+            };
+            return PartialView("HighestRankingMembers", topResults);
+        }
+
+        private List<Rank> cachedRanks()
+        {
+            if(System.Web.HttpContext.Current.Cache["stRanks"] == null)
+            {
+                System.Web.HttpContext.Current.Cache["stRanks"] = _rankManager.RetrieveUserRanks();
+            }
+            return (List<Rank>)System.Web.HttpContext.Current.Cache["stRanks"];
         }
     }
 }
