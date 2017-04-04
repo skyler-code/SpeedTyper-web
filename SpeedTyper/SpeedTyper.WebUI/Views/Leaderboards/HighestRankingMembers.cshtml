@@ -29,7 +29,7 @@
                 {
                     source = "../Content/Icons/Rank" + item.RankID + ".png";
                 }
-            @{ var rankName = rankList.Find(r => r.RankID == item.RankID);}
+            @{ var rankName = rankList.Find(r => r.RankID == item.RankID).RankName;}
             <img src=@source alt="@rankName" title="@rankName" />
         </td>
         <td>
