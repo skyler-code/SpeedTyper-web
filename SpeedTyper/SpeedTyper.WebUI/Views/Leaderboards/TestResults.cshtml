@@ -3,10 +3,10 @@
 
 <table class="table table-hover">
     <tr>
-        <th>Rank</th>
+        <th title="Leaderboard Rank">#</th>
         <th>@Html.DisplayNameFor(model => model.TopTestResults.FirstOrDefault().DisplayName)</th>
         <th>@Html.DisplayNameFor(model => model.TopTestResults.FirstOrDefault().RankID)</th>
-        <th>@Html.DisplayNameFor(model => model.TopTestResults.FirstOrDefault().WPM)</th>
+        <th title="Words Per Minute">@Html.DisplayNameFor(model => model.TopTestResults.FirstOrDefault().WPM)</th>
         <th>@Html.DisplayNameFor(model => model.TopTestResults.FirstOrDefault().Date)</th>
     </tr>
     @{ int count = 1;}

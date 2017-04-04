@@ -3,6 +3,7 @@
 
 <table class="table">
     <tr>
+        <th title="Leaderboard Rank">#</th>
         <th>
             @Html.DisplayNameFor(model => model.TopPlayers.FirstOrDefault().DisplayName)
         </th>
@@ -14,14 +15,18 @@
         </th>
     </tr>
 
-@foreach (var item in Model.TopPlayers) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.DisplayName)
-        </td>
-        <td>
-            @{var source = "";}
-            @if (item.RankID < 10)
+    @{ int count = 1;}
+    @foreach (var item in Model.TopPlayers)
+    {
+        <tr>
+
+            <td>@count.</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayName)
+            </td>
+            <td>
+                @{var source = "";}
+                @if (item.RankID < 10)
                 {
                     source = "../Content/Icons/Rank0" + item.RankID + ".png";
                 }
@@ -29,13 +34,14 @@
                 {
                     source = "../Content/Icons/Rank" + item.RankID + ".png";
                 }
-            @{ var rankName = rankList.Find(r => r.RankID == item.RankID).RankName;}
-            <img src=@source alt="@rankName" title="@rankName" />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurrentXP)
-        </td>
-    </tr>
-}
+                @{ var rankName = rankList.Find(r => r.RankID == item.RankID).RankName;}
+                <img src=@source alt="@rankName" title="@rankName" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentXP)
+            </td>
+        </tr>
+                        count++;
+                    }
 
 </table>
