@@ -201,6 +201,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaderboardsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TestTakerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -301,6 +302,7 @@
     <Content Include="Views\Leaderboards\Index.cshtml" />
     <Content Include="Views\Leaderboards\TestResults.cshtml" />
     <Content Include="Views\Leaderboards\HighestRankingMembers.cshtml" />
+    <Content Include="Views\TestTaker\DisplayTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
