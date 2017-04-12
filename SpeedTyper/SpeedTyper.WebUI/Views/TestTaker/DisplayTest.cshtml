@@ -4,6 +4,14 @@
 }
 
 <div class="form-group">
-    @Html.TextAreaFor(t => t.TestDataText, new {@class="form-control", rows="3" })
-    @Html.DisplayFor(t => t.DataSource)
+    <div id="test-statistics">
+        <label for="userSpeed">Your Speed:</label>
+        <text id="userSpeed"></text><br/>
+        <label for="timeLeft">Time Left:</label>
+        <text id="timeLeft"></text>
+    </div>
+    <div class="well">@Model.TestDataText</div>
+    @*@Html.TextAreaFor(t => t.TestDataText, new {@readonly = true,@class="form-control", rows="3"})*@
+    @Html.DisplayFor(t => t.DataSource) <br/><br/>
+    @Html.Editor("txtTextEntryBox", new { @class = "form-control" })<br/>
 </div>
