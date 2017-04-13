@@ -26,7 +26,10 @@ namespace SpeedTyper.WebUI
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
+            bundles.Add(new ScriptBundle("~/bundles/testtaker").Include(
+                    "~/Scripts/TestTaker/testtake.js"));
 #if DEBUG
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css").WithLastModifiedToken());

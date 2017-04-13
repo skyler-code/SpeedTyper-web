@@ -3,15 +3,18 @@
     Layout = null;
 }
 
+@Scripts.Render("~/bundles/testtaker")
+
 <div class="form-group">
     <div id="test-statistics">
         <label for="userSpeed">Your Speed:</label>
-        <text id="userSpeed"></text><br/>
+        <text id="userSpeed"></text><br />
         <label for="timeLeft">Time Left:</label>
         <text id="timeLeft"></text>
     </div>
-    <div class="well">@Model.TestDataText</div>
+    <div id="test-data-text" class="well">@Model.TestDataText</div>
     @*@Html.TextAreaFor(t => t.TestDataText, new {@readonly = true,@class="form-control", rows="3"})*@
-    @Html.DisplayFor(t => t.DataSource) <br/><br/>
-    @Html.Editor("txtTextEntryBox", new { @class = "form-control" })<br/>
+    @Html.DisplayFor(t => t.DataSource) <br /><br />
+    <input class="form-control" id="txtTextEntryBox" name="txtTextEntryBox" type="text" onchange="processInput();" onpaste="this.onchange();" oninput="this.onchange();" />
+    <br /><br />
 </div>
