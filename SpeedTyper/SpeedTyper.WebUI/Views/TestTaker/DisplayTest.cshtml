@@ -12,7 +12,9 @@
         <label for="timeLeft">Time Left:</label>
         <text id="timeLeft"></text>
     </div>
-    <div id="test-data-text" class="well">@Model.TestDataText</div>
+    <div class="well">
+        <p class="test-data-text" id="correct-words"></p><p class="test-data-text" id="untyped-words">@Model.TestDataText</p>
+    </div>
     @*@Html.TextAreaFor(t => t.TestDataText, new {@readonly = true,@class="form-control", rows="3"})*@
     @Html.DisplayFor(t => t.DataSource) <br /><br />
     <input class="form-control" id="txtTextEntryBox" name="txtTextEntryBox" type="text" onchange="processInput();" onpaste="this.onchange();" oninput="this.onchange();" />

@@ -27,6 +27,14 @@ textarea{
 }
 
 #test-statistics {
-    width:auto;
-    background-color:powderblue;
+    width:100px;
+    background-color:lightgray;
+}
+
+#correct-words {
+    color: green;
+}
+
+.test-data-text {
+    display:inline;
 }
