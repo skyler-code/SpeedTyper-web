@@ -24,10 +24,5 @@ namespace SpeedTyper.WebUI.Hubs
             TestData testData = testManager.RetrieveRandomTest();
             Clients.Caller.beginTest(testData.TestDataText, testData.DataSource, testData.TestID);
         }
-
-        public void Notify(string msg)
-        {
-            Clients.All.whisper(msg);
-        }
     }
 }

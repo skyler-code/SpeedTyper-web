@@ -2,6 +2,7 @@ console.log("js loaded");
 
 
 var testDataList;
+var currentWord;
 var correctWords = [];
 var testID;
 
@@ -18,33 +19,39 @@ $(function () {
 
     proxy.on('beginTest', function (testDataText, dataSource, _testID) {
         console.log("begin test");
-        $("#untyped-words").html(testDataText);
         $("#data-source").html(dataSource);
         testID = _testID;
         testDataList = testDataText.split(/\b(?![\s.])/);
+        currentWord = testDataList.shift();
+        $("#untyped-words").html(testDataList.join(""));
+        $('#current-word').html(currentWord);
         $('#txtTextEntryBox').focus();
     });
 
     connection.start().done(function (e) {
         console.log("success")
         $('#start-test').click(function () {
-            // Call the Send method on the hub.
-            proxy.invoke('notify', 'hi');
             proxy.invoke('startTest');
-            console.log('invoked');
         });
     }).fail(function (error) {
         console.log(error);
     });
 });
+
+
 function processInput() {
     var userInput = $('#txtTextEntryBox');
-    var firstWord = testDataList[0];
-    if (userInput.val() == firstWord) {
-        correctWords.push(testDataList.shift());
+    if (userInput.val() == currentWord) {
+        correctWords.push(currentWord);
+        if (testDataList[0] != null) {
+            currentWord = testDataList.shift();
+        } else {
+            currentWord = "";
+        }
         userInput.val("");
         $("#untyped-words").html(testDataList.join(""));
         $("#correct-words").html(correctWords.join(""));
+        $("#current-word").html(currentWord);
     }
 }
 

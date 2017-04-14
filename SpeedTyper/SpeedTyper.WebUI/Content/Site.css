@@ -35,6 +35,10 @@ textarea{
     color: green;
 }
 
+#current-word {
+    background-color: yellow;
+}
+
 .test-data-text {
     display:inline;
 }
