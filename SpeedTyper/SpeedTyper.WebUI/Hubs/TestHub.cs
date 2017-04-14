@@ -22,7 +22,7 @@ namespace SpeedTyper.WebUI.Hubs
         {
             System.Diagnostics.Debug.WriteLine("Start Test");
             TestData testData = testManager.RetrieveRandomTest();
-            Clients.All.beginTest(testData.TestDataText, testData.DataSource, testData.TestID);
+            Clients.Caller.beginTest(testData.TestDataText, testData.DataSource, testData.TestID);
         }
 
         public void Notify(string msg)
