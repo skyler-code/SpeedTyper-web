@@ -315,7 +315,6 @@
     <Content Include="Views\Leaderboards\TestResults.cshtml" />
     <Content Include="Views\Leaderboards\HighestRankingMembers.cshtml" />
     <Content Include="Views\TestTaker\DisplayTest.cshtml" />
-    <Content Include="Views\TestTaker\TestDisplay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,9 +18,10 @@
     <div class="well">
         <p class="test-data-text" id="correct-words"></p><p class="test-data-text" id="untyped-words"></p>
     </div>
-    @*@Html.TextAreaFor(t => t.TestDataText, new {@readonly = true,@class="form-control", rows="3"})*@
-    @*@Html.DisplayFor(t => t.DataSource)*@ <br /><br />
-    <input class="form-control" id="txtTextEntryBox" name="txtTextEntryBox" type="text" onchange="processInput();" onpaste="this.onchange();" oninput="this.onchange();" />
-    <input type="button" id="start-test" value="Start Test" />
+    <p id="data-source"></p><br />
+    <div>
+        <input class="form-control" id="txtTextEntryBox" name="txtTextEntryBox" type="text" onchange="processInput();" onpaste="this.onchange();" oninput="this.onchange();" style="display:inline"/>
+        <input type="button" id="start-test" value="Start Test"  />
+    </div>
     <br /><br />
 </div>
