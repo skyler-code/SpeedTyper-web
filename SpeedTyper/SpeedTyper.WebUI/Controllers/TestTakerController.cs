@@ -18,8 +18,13 @@ namespace SpeedTyper.WebUI.Controllers
         // GET: TestTaker
         public ActionResult DisplayTest()
         {
-            var test = _testManager.RetrieveRandomTest();
-            return View(test);
+            //var test = _testManager.RetrieveRandomTest();
+            return View();
+        }
+
+        public ActionResult TestDisplay()
+        {
+            return View();
         }
     }
 }

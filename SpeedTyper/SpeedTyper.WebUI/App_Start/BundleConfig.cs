@@ -26,6 +26,10 @@ namespace SpeedTyper.WebUI
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquerysignlr").Include(
+                      "~/Scripts/jquery.signalR-{version}.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/testtaker").Include(
                     "~/Scripts/TestTaker/testtake.js"));
 #if DEBUG
@@ -33,10 +37,16 @@ namespace SpeedTyper.WebUI
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css").WithLastModifiedToken());
+
+            bundles.Add(new ScriptBundle("~/bundles/testtaker").Include(
+                    "~/Scripts/TestTaker/testtake.js").WithLastModifiedToken());
 #else
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/testtaker").Include(
+                    "~/Scripts/TestTaker/testtake.js"));
 #endif
         }
     }

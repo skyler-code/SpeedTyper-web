@@ -213,6 +213,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\TestHub.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -314,6 +315,7 @@
     <Content Include="Views\Leaderboards\TestResults.cshtml" />
     <Content Include="Views\Leaderboards\HighestRankingMembers.cshtml" />
     <Content Include="Views\TestTaker\DisplayTest.cshtml" />
+    <Content Include="Views\TestTaker\TestDisplay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
