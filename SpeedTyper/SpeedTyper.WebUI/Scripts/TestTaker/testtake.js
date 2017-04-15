@@ -25,7 +25,9 @@ $(function () {
         currentWord = testDataList.shift();
         $("#untyped-words").html(testDataList.join(""));
         $('#current-word').html(currentWord);
-        $('#txtTextEntryBox').focus();
+        $('#correct-words').html("");
+        correctWords = [];
+        $('#txtTextEntryBox').val('').focus();
     });
 
     connection.start().done(function (e) {
