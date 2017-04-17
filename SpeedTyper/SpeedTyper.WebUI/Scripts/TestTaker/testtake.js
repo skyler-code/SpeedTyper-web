@@ -64,6 +64,7 @@ function startTest() {
             clearInterval(timer);
         }
         if (counter == endTimerCountdown) {
+            timeElapsed = 0;
             $("#untyped-words").html(testDataList.join(""));
             $('#current-word').html(currentWord);
             $('#correct-words').html("");
