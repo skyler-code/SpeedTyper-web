@@ -10,18 +10,17 @@
 
 <div class="form-group">
     <div id="test-statistics">
-        <label for="userSpeed">Your Speed:</label>
-        <text id="userSpeed"></text><br />
-        <label for="timeLeft">Time Left:</label>
-        <text id="timeLeft"></text>
+        <label for="user-speed">Your Speed:</label>
+        <text id="user-speed"></text><br />
+        <label for="time-left" class="test-data-text">Time Left:</label>
+        <text id="time-left" class="test-data-text"></text>
     </div>
     <div class="well">
         <p class="test-data-text" id="correct-words"></p><p class="test-data-text" id="current-word"></p><p class="test-data-text" id="untyped-words"></p>
     </div>
     <p id="data-source"></p><br />
     <div>
-        <input class="form-control" id="txtTextEntryBox" name="txtTextEntryBox" type="text" onchange="processInput();" onpaste="this.onchange();" oninput="this.onchange();" style="display:inline"/>
+        <input class="form-control" id="txtTextEntryBox" name="txtTextEntryBox" type="text" onchange="processInput();" onpaste="this.onchange();" oninput="this.onchange();" style="display:inline" readonly="readonly"/>
         <input type="button" id="start-test" value="Start Test"  />
     </div>
-    <br /><br />
 </div>
