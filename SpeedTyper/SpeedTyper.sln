@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeedTyper.WebUI", "SpeedTyper.WebUI\SpeedTyper.WebUI.csproj", "{0CA91CE6-A130-467F-BA69-99401BA46B37}"
 EndProject
@@ -17,6 +17,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CA91CE6-A130-467F-BA69-99401BA46B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA91CE6-A130-467F-BA69-99401BA46B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA91CE6-A130-467F-BA69-99401BA46B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA91CE6-A130-467F-BA69-99401BA46B37}.Release|Any CPU.Build.0 = Release|Any CPU
 		{24B2D72C-C7C9-486F-8DAF-9331144E36E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{24B2D72C-C7C9-486F-8DAF-9331144E36E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24B2D72C-C7C9-486F-8DAF-9331144E36E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,10 +33,6 @@ Global
 		{782D53F8-7937-4C03-97B7-A711149D3021}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{782D53F8-7937-4C03-97B7-A711149D3021}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{782D53F8-7937-4C03-97B7-A711149D3021}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CA91CE6-A130-467F-BA69-99401BA46B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CA91CE6-A130-467F-BA69-99401BA46B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CA91CE6-A130-467F-BA69-99401BA46B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CA91CE6-A130-467F-BA69-99401BA46B37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
