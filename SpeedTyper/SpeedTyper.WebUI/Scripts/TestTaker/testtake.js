@@ -73,16 +73,17 @@ function startTest() {
         }
         if (!testInProgress) {
             clearInterval(timer);
+        } else {
+            var minutes = Math.floor(counter / 60);
+            var seconds = counter - minutes * 60;
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+            var output = minutes + ":" + seconds;
+            $('#time-left').html(output);
+            counter--;
+            timeElapsed++;
         }
-        var minutes = Math.floor(counter / 60);
-        var seconds = counter - minutes * 60;
-        if (seconds < 10) {
-            seconds = "0" + seconds;
-        }
-        var output = minutes + ":" + seconds;
-        $('#time-left').html(output);
-        counter--;
-        timeElapsed++;
         if (counter < 0) {
             clearInterval(timer);
             endTest();
