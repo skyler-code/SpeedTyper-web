@@ -60,9 +60,6 @@ function startTestCountdown() {
 function startTest() {
     var counter = endTimerCountdown;
     var timer = setInterval(function () {
-        if (!testInProgress) {
-            clearInterval(timer);
-        }
         if (counter == endTimerCountdown) {
             testInProgress = true;
             timeElapsed = 0;
@@ -73,6 +70,9 @@ function startTest() {
             correctWords = [];
             $('#txtTextEntryBox').prop('readonly', false);
             $('#txtTextEntryBox').val('').focus();
+        }
+        if (!testInProgress) {
+            clearInterval(timer);
         }
         var minutes = Math.floor(counter / 60);
         var seconds = counter - minutes * 60;
