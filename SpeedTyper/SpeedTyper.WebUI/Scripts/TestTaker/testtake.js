@@ -24,7 +24,7 @@ $(function () {
 
     proxy.on('beginTest', function (testDataText, _dataSource, _testID) {
         console.log("begin test");
-        testInProgress = true;
+        testInProgress = false;
         dataSource = _dataSource;
         testID = _testID;
         testDataList = testDataText.split(/\b(?![\s.])/);
@@ -64,6 +64,7 @@ function startTest() {
             clearInterval(timer);
         }
         if (counter == endTimerCountdown) {
+            testInProgress = true;
             timeElapsed = 0;
             $("#untyped-words").html(testDataList.join(""));
             $('#current-word').html(currentWord);
