@@ -22,7 +22,11 @@ namespace SpeedTyper.WebUI.Models
     int, CustomUserLogin, CustomUserRole, CustomUserClaim>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection")
+#if DEBUG
+            : base("LocalSpeedTyperDB")
+#else
+            : base("AzureSpeedTyperDB")
+#endif
         {
         }
 
@@ -30,8 +34,6 @@ namespace SpeedTyper.WebUI.Models
         {
             return new ApplicationDbContext();
         }
-
-        public System.Data.Entity.DbSet<SpeedTyper.DataObjects.TestResult> TestResults { get; set; }
     }
     public class CustomUserRole : IdentityUserRole<int> { }
     public class CustomUserClaim : IdentityUserClaim<int> { }

@@ -214,6 +214,11 @@
     </Compile>
     <Compile Include="Hubs\TestHub.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Migrations\201704190336239_Init.cs" />
+    <Compile Include="Migrations\201704190336239_Init.Designer.cs">
+      <DependentUpon>201704190336239_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LeaderboardViewModels.cs" />
@@ -333,6 +338,11 @@
       <Project>{782d53f8-7937-4c03-97b7-a711149d3021}</Project>
       <Name>SpeedTyper.LogicLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201704190336239_Init.resx">
+      <DependentUpon>201704190336239_Init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
