@@ -189,6 +189,20 @@ namespace SpeedTyper.LogicLayer
             return userNameFound;
         }
 
+        public User RetrieveUserByUsername(string username)
+        {
+            User returnUser = null;
+            try
+            {
+                returnUser = UserAccessor.RetrieveUserByUsername(username);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return returnUser;
+        }
+
         public Tuple<User, int, bool> UserLevelingHandler(User user, int earnedXP)
         {
             int oldLevel = user.Level;

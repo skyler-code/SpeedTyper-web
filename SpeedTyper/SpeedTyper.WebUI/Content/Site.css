@@ -1,6 +1,11 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: dimgrey;
+}
+
+footer{
+    color: lightskyblue;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -28,7 +33,7 @@ textarea{
 
 #test-statistics {
     width:130px;
-    background-color:lightgray;
+    background-color: lightgray;
 }
 
 #correct-words {
@@ -41,4 +46,17 @@ textarea{
 
 .test-data-text {
     display:inline;
+}
+
+#hr-footer{
+    border-color: dimgrey;
+}
+
+.table{
+    background-color: white;
+}
+
+.jumbotron{
+    margin-top: 20px;
+    padding-top: 10px;
 }

@@ -1,26 +1,29 @@
 ﻿@{ ViewBag.Title = "Leaderboards";}
-<h2>@ViewBag.Title</h2>
-<ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#menuAll">All</a></li>
-    <li><a data-toggle="tab" href="#menu90">90 Days</a></li>
-    <li><a data-toggle="tab" href="#menu30">30 Days</a></li>
-    <li><a data-toggle="tab" href="#menuToday">Today</a></li>
-    <li><a data-toggle="tab" href="#menuHighestLevel">Highest Level</a></li>
-</ul> 
-<div class="tab-content">
-    <div id="menuAll" class="tab-pane fade in active">
-        @Html.Action("AllTopResults", "Leaderboards")
-    </div>
-    <div id="menu90" class="tab-pane fade">
-        @Html.Action("Top90DaysResults", "Leaderboards")
-    </div>
-    <div id="menu30" class="tab-pane fade">
-        @Html.Action("Top30DaysResults", "Leaderboards")
-    </div>
-    <div id="menuToday" class="tab-pane fade">
-        @Html.Action("TodaysResults", "Leaderboards")
-    </div>
-    <div id="menuHighestLevel" class="tab-pane fade">
-        @Html.Action("HighestRankingMembers", "Leaderboards")
+
+<div class="jumbotron">
+    <h2>@ViewBag.Title</h2>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#menuAll">All</a></li>
+        <li><a data-toggle="tab" href="#menu90">90 Days</a></li>
+        <li><a data-toggle="tab" href="#menu30">30 Days</a></li>
+        <li><a data-toggle="tab" href="#menuToday">Today</a></li>
+        <li><a data-toggle="tab" href="#menuHighestLevel">Highest Level</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="menuAll" class="tab-pane fade in active">
+            @Html.Action("AllTopResults", "Leaderboards")
+        </div>
+        <div id="menu90" class="tab-pane fade">
+            @Html.Action("Top90DaysResults", "Leaderboards")
+        </div>
+        <div id="menu30" class="tab-pane fade">
+            @Html.Action("Top30DaysResults", "Leaderboards")
+        </div>
+        <div id="menuToday" class="tab-pane fade">
+            @Html.Action("TodaysResults", "Leaderboards")
+        </div>
+        <div id="menuHighestLevel" class="tab-pane fade">
+            @Html.Action("HighestRankingMembers", "Leaderboards")
+        </div>
     </div>
 </div>

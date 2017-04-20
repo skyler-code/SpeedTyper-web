@@ -13,5 +13,6 @@ namespace SpeedTyper.LogicLayer
         User UpdateUser(int userID, string oldDisplayName, string newDisplayName, string oldPassword, string newPassword);
         Tuple<User, int, bool> UserLevelingHandler(User user, int earnedXP);
         bool VerifyIfUserNameExists(string username);
+        User RetrieveUserByUsername(string username);
     }
 }

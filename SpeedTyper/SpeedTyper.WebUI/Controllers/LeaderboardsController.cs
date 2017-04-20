@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using SpeedTyper.DataObjects;
 using SpeedTyper.LogicLayer;
 using SpeedTyper.WebUI.Models;
+using SpeedTyper.WebUI.Infrastructure;
 
 namespace SpeedTyper.WebUI.Controllers
 {
@@ -41,7 +42,7 @@ namespace SpeedTyper.WebUI.Controllers
             var topResults = new LeaderboardViewModels.TestResultsModel()
             {
                 TopTestResults = _testManager.GetAllTopTestResults(),
-                Ranks = cachedRanks()
+                Ranks = CacheManager.CachedRanks()
             };
             return PartialView("TestResults", topResults);
         }
@@ -51,7 +52,7 @@ namespace SpeedTyper.WebUI.Controllers
             var topResults = new LeaderboardViewModels.TestResultsModel()
             {
                 TopTestResults = _testManager.GetTop30DaysResults(),
-                Ranks = cachedRanks()
+                Ranks = CacheManager.CachedRanks()
             };
             return PartialView("TestResults", topResults);
         }
@@ -61,7 +62,7 @@ namespace SpeedTyper.WebUI.Controllers
             var topResults = new LeaderboardViewModels.TestResultsModel()
             {
                 TopTestResults = _testManager.GetTop90DaysResults(),
-                Ranks = cachedRanks()
+                Ranks = CacheManager.CachedRanks()
             };
             return PartialView("TestResults", topResults);
         }
@@ -71,7 +72,7 @@ namespace SpeedTyper.WebUI.Controllers
             var topResults = new LeaderboardViewModels.TestResultsModel()
             {
                 TopTestResults = _testManager.GetTodaysResults(),
-                Ranks = cachedRanks()
+                Ranks = CacheManager.CachedRanks()
             };
             return PartialView("TestResults", topResults);
         }
@@ -81,18 +82,9 @@ namespace SpeedTyper.WebUI.Controllers
             var topResults = new LeaderboardViewModels.HighestRankedPlayersModel
             {
                 TopPlayers = _userManager.RetrieveHighestRankingMembers(),
-                Ranks = cachedRanks()
+                Ranks = CacheManager.CachedRanks()
             };
             return PartialView("HighestRankingMembers", topResults);
-        }
-
-        private List<Rank> cachedRanks()
-        {
-            if(System.Web.HttpContext.Current.Cache["stRanks"] == null)
-            {
-                System.Web.HttpContext.Current.Cache["stRanks"] = _rankManager.RetrieveUserRanks();
-            }
-            return (List<Rank>)System.Web.HttpContext.Current.Cache["stRanks"];
         }
     }
 }

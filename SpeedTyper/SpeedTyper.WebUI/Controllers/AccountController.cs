@@ -17,16 +17,18 @@ namespace SpeedTyper.WebUI.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private LogicLayer.IUserManager _usrManager = new LogicLayer.UserManager();
+        private LogicLayer.IUserManager _usrManager;
 
-        public AccountController()
+        public AccountController(LogicLayer.IUserManager usrManager)
         {
+            _usrManager = usrManager;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, LogicLayer.IUserManager usrManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _usrManager = usrManager;
         }
 
         public ApplicationSignInManager SignInManager
@@ -164,9 +166,9 @@ namespace SpeedTyper.WebUI.Controllers
                         _stUser = _usrManager.CreateUser(model.Username, model.DisplayName, model.Password);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    ViewBag.Message = "Uh oh.";
+                    ViewBag.Message = ex.Message;
                     return View();
                 }
 
