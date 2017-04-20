@@ -60,3 +60,14 @@ textarea{
     margin-top: 20px;
     padding-top: 10px;
 }
+
+.progress {
+    position: relative;
+}
+
+.progress span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: black;
+}
