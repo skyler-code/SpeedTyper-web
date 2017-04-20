@@ -1,7 +1,15 @@
 ﻿@model SpeedTyper.DataObjects.User
 
 @{double widthPercent = ((double)@Model.CurrentXP / (double)@Model.XPToLevel) * 100;}
-@{var widthString = widthPercent + "%";}
+@{String widthString;
+    if (widthPercent < 0 || widthPercent > 100)
+    {
+        widthString = "100%";
+    } else
+    {
+        widthString = widthPercent + "%";
+    }
+}
 
 <div class="progress">
     <div class="progress-bar" role="progressbar" aria-valuenow="@Model.CurrentXP" aria-valuemin="0" aria-valuemax="@Model.XPToLevel" style="width: @widthString">

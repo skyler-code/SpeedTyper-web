@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SpeedTyper.LogicLayer;
+using Microsoft.AspNet.Identity;
 
 namespace SpeedTyper.WebUI.Controllers
 {
@@ -18,11 +19,7 @@ namespace SpeedTyper.WebUI.Controllers
         // GET: ProgressBar
         public PartialViewResult ProgressBar()
         {
-            var user = new DataObjects.User
-            {
-                CurrentXP = 500,
-                XPToLevel = 1000
-            };
+            var user = _userManager.RetrieveUserByUsername(User.Identity.GetUserName());
             return PartialView(user);
         }
     }
