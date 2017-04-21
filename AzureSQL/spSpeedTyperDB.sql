@@ -1,3 +1,10 @@
+IF OBJECT_ID('dbo.sp_authenticate_user') IS NOT NULL
+BEGIN
+	DROP PROCEDURE sp_authenticate_user
+	print '' print '*** dropping sp_authenticate_user procedure'
+END
+GO
+
 print '' print '*** Creating sp_authenticate_user'
 GO
 CREATE PROCEDURE [dbo].[sp_authenticate_user]
@@ -12,6 +19,13 @@ AS
 		WHERE UserName = @UserName
 		AND PasswordHash = @PasswordHash
 	END
+GO
+
+IF OBJECT_ID('dbo.sp_retrieve_user_by_username') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_user_by_username
+	print '' print '*** dropping sp_retrieve_user_by_username procedure'
+END
 GO
 
 print '' print '*** Creating sp_retrieve_user_by_username'
@@ -29,6 +43,13 @@ AS
 	END
 GO
 
+IF OBJECT_ID('dbo.sp_retrieve_user_by_id') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_user_by_id
+	print '' print '*** dropping sp_retrieve_user_by_id procedure'
+END
+GO
+
 print '' print '*** Creating sp_retrieve_user_by_id'
 GO
 CREATE PROCEDURE [dbo].[sp_retrieve_user_by_id]
@@ -42,6 +63,13 @@ AS
 		WHERE UserID = @UserID
 		AND Users.Level + 1 = LevelInfo.Level
 	END
+GO
+
+IF OBJECT_ID('dbo.sp_create_user') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_create_user
+	print '' print '*** dropping sp_create_user procedure'
+END
 GO
 
 print '' print '*** Creating sp_create_user'
@@ -59,6 +87,13 @@ AS
 		VALUES
 			(@UserName, @DisplayName, @PasswordHash)
 	END
+GO
+
+IF OBJECT_ID('dbo.sp_update_user') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_update_user
+	print '' print '*** dropping sp_update_user procedure'
+END
 GO
 
 
@@ -84,6 +119,13 @@ AS
 	END
 GO
 
+IF OBJECT_ID('dbo.sp_retrieve_rank_names') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_rank_names
+	print '' print '*** dropping sp_retrieve_rank_names procedure'
+END
+GO
+
 print '' print '*** Creating sp_retrieve_rank_names'
 GO
 CREATE PROCEDURE [dbo].[sp_retrieve_rank_names]
@@ -94,6 +136,12 @@ AS
 	END
 GO
 
+IF OBJECT_ID('dbo.sp_retrieve_random_test') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_random_test
+	print '' print '*** dropping sp_retrieve_random_test procedure'
+END
+GO
 
 print '' print '*** Creating sp_retrieve_random_test'
 GO
@@ -106,18 +154,11 @@ AS
 	END
 GO
 
-print '' print '*** Creating sp_retrieve_testdata_by_id'
-GO
-CREATE PROCEDURE [dbo].[sp_retrieve_testdata_by_id]
-	(
-	@TestID int
-	)
-AS
-	BEGIN
-		SELECT TestID, TestDataText, DataSource
-		FROM TestData
-		WHERE TestID = @TestID
-	END
+IF OBJECT_ID('dbo.sp_insert_test_result') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_insert_test_result
+	print '' print '*** dropping sp_insert_test_result procedure'
+END
 GO
 
 print '' print '*** Creating sp_insert_test_result'
@@ -139,6 +180,13 @@ AS
 	END
 GO
 
+IF OBJECT_ID('dbo.sp_retrieve_test_by_id') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_test_by_id
+	print '' print '*** dropping sp_retrieve_test_by_id procedure'
+END
+GO
+
 print '' print '*** Creating sp_retrieve_test_by_id'
 GO
 CREATE PROCEDURE [dbo].[sp_retrieve_test_by_id]
@@ -153,6 +201,13 @@ AS
 	END
 GO
 
+IF OBJECT_ID('dbo.sp_retrieve_top_10_test_scores') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_top_10_test_scores
+	print '' print '*** dropping sp_retrieve_top_10_test_scores procedure'
+END
+GO
+
 print '' print '*** Creating sp_retrieve_top_10_test_scores'
 GO
 CREATE PROCEDURE [dbo].[sp_retrieve_top_10_test_scores]
@@ -165,6 +220,13 @@ AS
 	END
 GO
 
+IF OBJECT_ID('dbo.sp_retrieve_all_top_test_scores') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_all_top_test_scores
+	print '' print '*** dropping sp_retrieve_all_top_test_scores procedure'
+END
+GO
+
 print '' print '*** Creating sp_retrieve_all_top_test_scores'
 GO
 CREATE PROCEDURE [dbo].[sp_retrieve_all_top_test_scores]
@@ -175,6 +237,13 @@ AS
 		WHERE Users.UserID = TestResults.UserID
 		ORDER BY WPM DESC
 	END
+GO
+
+IF OBJECT_ID('dbo.sp_retrieve_last_90_days_test_scores') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_last_90_days_test_scores
+	print '' print '*** dropping sp_retrieve_last_90_days_test_scores procedure'
+END
 GO
 
 print '' print '*** Creating sp_retrieve_last_90_days_test_scores'
@@ -190,6 +259,13 @@ AS
 	END
 GO
 
+IF OBJECT_ID('dbo.sp_retrieve_last_30_days_test_scores') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_last_30_days_test_scores
+	print '' print '*** dropping sp_retrieve_last_30_days_test_scores procedure'
+END
+GO
+
 print '' print '*** Creating sp_retrieve_last_30_days_test_scores'
 GO
 CREATE PROCEDURE [dbo].[sp_retrieve_last_30_days_test_scores]
@@ -201,6 +277,13 @@ AS
 		AND DateTaken >= DATEADD(DAY, -30, GETDATE())
 		ORDER BY WPM DESC
 	END
+GO
+
+IF OBJECT_ID('dbo.sp_retrieve_todays_test_scores') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_todays_test_scores
+	print '' print '*** dropping sp_retrieve_todays_test_scores procedure'
+END
 GO
 
 print '' print '*** Creating sp_retrieve_todays_test_scores'
@@ -216,6 +299,12 @@ AS
 	END
 GO
 
+IF OBJECT_ID('dbo.sp_retrieve_user_last_10_scores') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_user_last_10_scores
+	print '' print '*** dropping sp_retrieve_user_last_10_scores procedure'
+END
+GO
 
 print '' print '*** Creating sp_retrieve_user_last_10_scores'
 GO
@@ -232,6 +321,13 @@ AS
 	END
 GO
 
+IF OBJECT_ID('dbo.sp_retrieve_highest_ranking_users') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_highest_ranking_users
+	print '' print '*** dropping sp_retrieve_highest_ranking_users procedure'
+END
+GO
+
 print '' print '*** Creating sp_retrieve_highest_ranking_users'
 GO
 CREATE PROCEDURE [dbo].[sp_retrieve_highest_ranking_users]
@@ -242,6 +338,13 @@ AS
 		WHERE RankID > 0
 		ORDER BY RankID DESC, CurrentXP DESC
 	END
+GO
+
+IF OBJECT_ID('dbo.sp_retrieve_wpm_xp_modifier') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_wpm_xp_modifier
+	print '' print '*** dropping sp_retrieve_wpm_xp_modifier procedure'
+END
 GO
 
 print '' print '*** Creating sp_retrieve_wpm_xp_modifier'
@@ -255,8 +358,15 @@ AS
 		SELECT MAX(ModifierValue)
 		FROM XPModifierInfo
 		WHERE @WPM >= RequiredValue
-		AND ModifierType = "wpm"
+		AND ModifierType = 'wpm'
 	END
+GO
+
+IF OBJECT_ID('dbo.sp_retrieve_time_xp_modifier') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_time_xp_modifier
+	print '' print '*** dropping sp_retrieve_time_xp_modifier procedure'
+END
 GO
 
 print '' print '*** Creating sp_retrieve_time_xp_modifier'
@@ -270,8 +380,15 @@ AS
 		SELECT MAX(ModifierValue)
 		FROM XPModifierInfo
 		WHERE @SecondsElapsed <= RequiredValue
-		AND ModifierType = "time"
+		AND ModifierType = 'time'
 	END
+GO
+
+IF OBJECT_ID('dbo.sp_retrieve_required_xp_for_level') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_required_xp_for_level
+	print '' print '*** dropping sp_retrieve_required_xp_for_level procedure'
+END
 GO
 
 print '' print '*** Creating sp_retrieve_required_xp_for_level'
@@ -286,6 +403,13 @@ AS
 		FROM LevelInfo
 		WHERE Level = @Level
 	END
+GO
+
+IF OBJECT_ID('dbo.sp_update_user_level_info') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_update_user_level_info
+	print '' print '*** dropping sp_update_user_level_info procedure'
+END
 GO
 
 print '' print '*** Creating sp_update_user_level_info'
@@ -310,6 +434,13 @@ AS
 	END
 GO
 
+IF OBJECT_ID('dbo.sp_retrieve_king') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_retrieve_king
+	print '' print '*** dropping sp_retrieve_king procedure'
+END
+GO
+
 print '' print '*** Creating sp_retrieve_king'
 GO
 CREATE PROCEDURE [dbo].[sp_retrieve_king]
@@ -319,6 +450,13 @@ AS
 		FROM Users
 		WHERE RankID = (SELECT MAX(RankID) FROM RankInfo)
 	END
+GO
+
+IF OBJECT_ID('dbo.sp_succession') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_succession
+	print '' print '*** dropping sp_succession procedure'
+END
 GO
 
 print '' print '*** Creating sp_succession'
@@ -342,6 +480,13 @@ AS
 	END
 GO
 
+IF OBJECT_ID('dbo.sp_user_rank_up') IS NOT NULL
+BEGIN
+	DROP PROCEDURE dbo.sp_user_rank_up
+	print '' print '*** dropping sp_user_rank_up procedure'
+END
+GO
+
 print '' print '*** Creating sp_user_rank_up'
 GO 
 CREATE PROCEDURE [dbo].[sp_user_rank_up]
@@ -357,3 +502,28 @@ AS
 		RETURN @@ROWCOUNT
 	END
 GO
+
+
+GRANT EXECUTE ON sp_authenticate_user to readerUser;
+GRANT EXECUTE ON sp_retrieve_user_by_username to readerUser;
+GRANT EXECUTE ON sp_retrieve_user_by_id to readerUser;
+GRANT EXECUTE ON sp_create_user to readerUser;
+GRANT EXECUTE ON sp_update_user to readerUser;
+GRANT EXECUTE ON sp_retrieve_rank_names to readerUser;
+GRANT EXECUTE ON sp_retrieve_random_test to readerUser;
+GRANT EXECUTE ON sp_insert_test_result to readerUser;
+GRANT EXECUTE ON sp_retrieve_test_by_id to readerUser;
+GRANT EXECUTE ON sp_retrieve_top_10_test_scores to readerUser;
+GRANT EXECUTE ON sp_retrieve_all_top_test_scores to readerUser;
+GRANT EXECUTE ON sp_retrieve_last_90_days_test_scores to readerUser;
+GRANT EXECUTE ON sp_retrieve_last_30_days_test_scores to readerUser;
+GRANT EXECUTE ON sp_retrieve_todays_test_scores to readerUser;
+GRANT EXECUTE ON sp_retrieve_user_last_10_scores to readerUser;
+GRANT EXECUTE ON sp_retrieve_highest_ranking_users to readerUser;
+GRANT EXECUTE ON sp_retrieve_wpm_xp_modifier to readerUser;
+GRANT EXECUTE ON sp_retrieve_time_xp_modifier to readerUser;
+GRANT EXECUTE ON sp_retrieve_required_xp_for_level to readerUser;
+GRANT EXECUTE ON sp_update_user_level_info to readerUser;
+GRANT EXECUTE ON sp_retrieve_king to readerUser;
+GRANT EXECUTE ON sp_succession to readerUser;
+GRANT EXECUTE ON sp_user_rank_up to readerUser;

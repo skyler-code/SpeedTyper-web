@@ -1,24 +1,12 @@
-/* Check if database already exists and delete it if it does exist*/
-IF EXISTS(SELECT 1 FROM master.dbo.sysdatabases WHERE name = 'SpeedTyperDB')
+IF OBJECT_ID(N'dbo.Users', N'U') IS NOT NULL
 BEGIN
-	DROP DATABASE SpeedTyperDB
-	print '' print '*** dropping database SpeedTyperDB'
+	DROP TABLE Users
+	print '' print '*** dropping Users table'
 END
-GO
-
-print '' print '*** creating database SpeedTyperDB'
-GO
-CREATE DATABASE SpeedTyperDB
-GO
-
-print '' print '*** using database SpeedTyperDB'
-GO
-USE [SpeedTyperDB]
 GO
 
 print '' print '*** Creating Users Table'
 GO
-/* ***** Object:  Table [dbo].[Users]     ***** */
 CREATE TABLE [dbo].[Users](
 	[UserID] 		[int] IDENTITY (1,1)	NOT NULL,
 	[UserName]		[varchar](20)			NOT NULL,
@@ -31,6 +19,13 @@ CREATE TABLE [dbo].[Users](
 	CONSTRAINT [pk_UserID] PRIMARY KEY([UserID] ASC),
 	CONSTRAINT [ak_Username] UNIQUE ([Username] ASC)
 )
+GO
+
+IF OBJECT_ID(N'dbo.TestResults', N'U') IS NOT NULL
+BEGIN
+	DROP TABLE TestResults
+	print '' print '*** dropping TestResults table'
+END
 GO
 
 print '' print '*** Creating TestResults Table'
@@ -48,6 +43,13 @@ CREATE TABLE [dbo].[TestResults](
 )
 GO
 
+IF OBJECT_ID(N'dbo.TestData', N'U') IS NOT NULL
+BEGIN
+	DROP TABLE TestData
+	print '' print '*** dropping TestData table'
+END
+GO
+
 print '' print '*** Creating TestData Table'
 GO
 
@@ -59,6 +61,13 @@ CREATE TABLE [dbo].[TestData](
 )
 GO
 
+IF OBJECT_ID(N'dbo.LevelInfo', N'U') IS NOT NULL
+BEGIN
+	DROP TABLE LevelInfo
+	print '' print '*** dropping LevelInfo table'
+END
+GO
+
 print '' print '*** Creating LevelInfo Table'
 GO
 CREATE TABLE [dbo].[LevelInfo](
@@ -66,6 +75,13 @@ CREATE TABLE [dbo].[LevelInfo](
 	[RequiredXP]	[int]			NOT NULL,
 	CONSTRAINT [pk_Level] PRIMARY KEY([Level] ASC)
 )
+GO
+
+IF OBJECT_ID(N'dbo.XPModifierInfo', N'U') IS NOT NULL
+BEGIN
+	DROP TABLE XPModifierInfo
+	print '' print '*** dropping XPModifierInfo table'
+END
 GO
 
 print '' print '*** Creating XPModifierInfo Table'
@@ -76,6 +92,13 @@ CREATE TABLE [dbo].[XPModifierInfo](
 	[ModifierValue]	[decimal](18,2)		NOT NULL
 )
 
+IF OBJECT_ID(N'dbo.RankInfo', N'U') IS NOT NULL
+BEGIN
+	DROP TABLE RankInfo
+	print '' print '*** dropping RankInfo table'
+END
+GO
+
 print '' print '*** Creating RankInfo Table'
 GO
 CREATE TABLE [dbo].[RankInfo](
@@ -84,5 +107,3 @@ CREATE TABLE [dbo].[RankInfo](
 	CONSTRAINT [pk_RankID] PRIMARY KEY([RankID] ASC)
 )
 GO
-
-

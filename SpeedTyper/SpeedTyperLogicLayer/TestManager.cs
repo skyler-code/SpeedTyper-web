@@ -43,6 +43,20 @@ namespace SpeedTyper.LogicLayer
             return testData;
         }
 
+        public TestData RetrieveTestDataByID(int testID)
+        {
+            TestData testData = null;
+            try
+            {
+                testData = TestAccessor.RetrieveTestDataByID(testID);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return testData;
+        }
+
         public TestResult SaveTestResults(int userID, int testID, decimal WPM, int secondsElapsed)
         {
             TestResult testResult = null;

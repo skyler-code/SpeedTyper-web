@@ -135,6 +135,45 @@ namespace SpeedTyper.DataAccess
             return testResult;
         }
 
+        public static TestData RetrieveTestDataByID(int testID)
+        {
+            TestData testData = null;
+
+            var conn = DBConnection.GetConnection();
+            var cmdText = @"sp_retrieve_testdata_by_id";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@TestID", testID);
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    testData = new TestData()
+                    {
+                        TestID = reader.GetInt32(0),
+                        TestDataText = reader.GetString(1),
+                        DataSource = reader.GetString(2)
+                    };
+                }
+                reader.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return testData;
+        }
+
         public static List<TestResult> RetrieveTop10TestResults()
         {
             var testResult = new List<TestResult>();

@@ -6,6 +6,7 @@ using Microsoft.AspNet.SignalR;
 using SpeedTyper.LogicLayer;
 using SpeedTyper.DataObjects;
 using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNet.Identity;
 
 namespace SpeedTyper.WebUI.Hubs
 {
@@ -13,16 +14,70 @@ namespace SpeedTyper.WebUI.Hubs
     public class TestHub : Hub
     {
         ITestManager testManager;
-        public TestHub(ITestManager _testManager)
+        IUserManager userManager;
+        ILevelManager levelManager;
+        public TestHub(ITestManager _testManager, IUserManager _userManager, ILevelManager _levelManager)
         {
             testManager = _testManager;
+            userManager = _userManager;
+            levelManager = _levelManager;
         }
 
         public void StartTest()
         {
-            System.Diagnostics.Debug.WriteLine("Start Test");
             TestData testData = testManager.RetrieveRandomTest();
             Clients.Caller.beginTest(testData.TestDataText, testData.DataSource, testData.TestID);
+        }
+
+        public void SubmitTest(int testID, decimal wpm, int timeElapsed)
+        {
+            if (Context.User.Identity.IsAuthenticated)
+            {
+                try
+                {
+                    var user = userManager.RetrieveUserByUsername(Context.User.Identity.GetUserName());
+                    TestResult testResult = testManager.SaveTestResults(user.UserID, testID, wpm, timeElapsed);
+                    var wpmXPModifier = levelManager.GetWPMXPModifier(wpm);
+                    var timeXPModifier = levelManager.GetTimeXPModifier((decimal)timeElapsed);
+                    var earnedXP = levelManager.CalculateXP(wpm, wpmXPModifier, timeXPModifier);
+
+                    string submissionString = "You have earned " + earnedXP + " XP!\n" +
+                                    "WPM = " + testResult.WPM + "\n" +
+                                    "WPM Modifier = " + wpmXPModifier + "\n" +
+                                    "Time Modifier = " + timeXPModifier + "\n" +
+                                    testResult.WPM + " x (" + wpmXPModifier + " + " + timeXPModifier + ") = " + earnedXP;
+
+                    var appliedXPTuple = userManager.UserLevelingHandler(userManager.RetrieveUserByID(user.UserID), earnedXP);
+                    user = appliedXPTuple.Item1;
+                    int levelsGained = appliedXPTuple.Item2;
+                    bool titlesEarned = appliedXPTuple.Item3;
+                    string rewardString = "";
+
+                    if (levelsGained > 0 || titlesEarned == true)
+                    {
+                        if (levelsGained > 1)
+                        {
+                            rewardString = "Wow! Somehow, you managed to earn more than 1 level. Congrats!";
+                        }
+                        else if (levelsGained == 1)
+                        {
+                            rewardString = "You have leveled up!\nYou are now level " + user.Level +
+                                           "\nYou have earned the rank: " + Infrastructure.CacheManager.CachedRanks().Find(r => r.RankID == user.RankID).RankName;
+                        }
+                        else
+                        {
+                            rewardString = "You have earned the rank: " + Infrastructure.CacheManager.CachedRanks().Find(r => r.RankID == user.RankID).RankName;
+                        }
+                    }
+                    Clients.Caller.testSubmitSuccess(submissionString, rewardString);
+                }
+                catch (Exception ex)
+                {
+                    Clients.Caller.testSubmitFailure(ex.Message);
+                }
+
+
+            }
         }
     }
 }

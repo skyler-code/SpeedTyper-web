@@ -14,5 +14,6 @@ namespace SpeedTyper.LogicLayer
         Tuple<User, int, bool> UserLevelingHandler(User user, int earnedXP);
         bool VerifyIfUserNameExists(string username);
         User RetrieveUserByUsername(string username);
+        User RetrieveUserByID(int userID);
     }
 }

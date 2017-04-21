@@ -16,5 +16,6 @@ namespace SpeedTyper.LogicLayer
         TestResult SaveTestResults(int userID, int testID, decimal WPM, int secondsElapsed);
         string SecondsToTimeSpanFormatter(int seconds);
         string TicksToTimeSpanFormatter(long ticks);
+        TestData RetrieveTestDataByID(int testID);
     }
 }

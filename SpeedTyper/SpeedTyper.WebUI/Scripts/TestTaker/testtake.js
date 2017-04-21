@@ -5,11 +5,11 @@ var testDataList;
 var dataSource;
 var currentWord;
 var correctWords = [];
-var testID;
+var _testID;
 var startTimerCountdown = 5;
 var endTimerCountdown = 120;
 var testInProgress = false;
-var timeElapsed = 0;
+var _timeElapsed = -1;
 
 
 $(function () {
@@ -22,112 +22,128 @@ $(function () {
         console.log(msg);
     });
 
-    proxy.on('beginTest', function (testDataText, _dataSource, _testID) {
+    proxy.on('beginTest', function (testDataText, _dataSource, newtestID) {
         console.log("begin test");
         testInProgress = false;
         dataSource = _dataSource;
-        testID = _testID;
+        _testID = newtestID;
         testDataList = testDataText.split(/\b(?![\s.])/);
         currentWord = testDataList.shift();
-        timeElapsed = 0;
+        _timeElapsed = -1;
         startTestCountdown();
     });
 
+    proxy.on('testSubmitSuccess', function (submissionString, rewardString) {
+        alert(submissionString);
+        if (rewardString != "") {
+            alert(rewardString);
+        }
+    });
+
+    proxy.on('testSubmitFailure', function (msg) {
+        alert(msg);
+    });
+
+    function endTest() {
+        $('#user-speed').html(CalculateWPM());
+        testInProgress = false;
+        $('#txtTextEntryBox').val('Test over.').prop('readonly', true).blur();
+        var _guid = $('#guid').html();
+        proxy.invoke('submitTest', _testID, CalculateWPM(), _timeElapsed);
+    }
+
     connection.start().done(function (e) {
-        console.log("success")
+        console.log("success");
         $('#start-test').click(function () {
             proxy.invoke('startTest');
         });
     }).fail(function (error) {
         console.log(error);
     });
-});
 
-function startTestCountdown() {
-    $('#txtTextEntryBox').prop('readonly', true);
-    var counter = startTimerCountdown;
-    var timer = setInterval(function () {
-        var output = 'Test starting in ' + counter + ' seconds...';
-        $('#txtTextEntryBox').val(output);
-        counter--;
-        if (counter < 1) {
-            clearInterval(timer);
-            startTest();
-        }
-    }, 1000);
-}
 
-function startTest() {
-    var counter = endTimerCountdown;
-    var timer = setInterval(function () {
-        if (counter == endTimerCountdown) {
-            testInProgress = true;
-            timeElapsed = 0;
-            $("#untyped-words").html(testDataList.join(""));
-            $('#current-word').html(currentWord);
-            $('#correct-words').html("");
-            $('#data-source').html(dataSource);
-            correctWords = [];
-            $('#txtTextEntryBox').prop('readonly', false);
-            $('#txtTextEntryBox').val('').focus();
-        }
-        if (!testInProgress) {
-            clearInterval(timer);
-        } else {
-            var minutes = Math.floor(counter / 60);
-            var seconds = counter - minutes * 60;
-            if (seconds < 10) {
-                seconds = "0" + seconds;
-            }
-            var output = minutes + ":" + seconds;
-            $('#time-left').html(output);
+
+    function startTestCountdown() {
+        $('#txtTextEntryBox').prop('readonly', true);
+        var counter = startTimerCountdown;
+        var timer = setInterval(function () {
+            var output = 'Test starting in ' + counter + ' seconds...';
+            $('#txtTextEntryBox').val(output);
             counter--;
-            timeElapsed++;
-        }
-        if (counter < 0) {
-            clearInterval(timer);
-            endTest();
-        }
-    }, 1000);
-}
-
-function endTest() {
-    $('#user-speed').html(CalculateWPM());
-    testInProgress = false;
-    $('#txtTextEntryBox').val('Test over.').prop('readonly', true).blur();
-}
-
-
-function processInput() {
-    if (testInProgress) {
-        var userInput = $('#txtTextEntryBox');
-        if (userInput.val() == currentWord) {
-            correctWords.push(currentWord);
-            if (testDataList[0] != null) {
-                currentWord = testDataList.shift();
-            } else {
-                endTest();
-                currentWord = "";
+            if (counter < 1) {
+                clearInterval(timer);
+                startTest();
             }
-            userInput.val("");
-            $("#untyped-words").html(testDataList.join(""));
-            $("#correct-words").html(correctWords.join(""));
-            $("#current-word").html(currentWord);
+        }, 1000);
+    }
+
+    function startTest() {
+        var counter = endTimerCountdown;
+        var timer = setInterval(function () {
+            if (counter == endTimerCountdown) {
+                testInProgress = true;
+                _timeElapsed = -1;
+                $("#untyped-words").html(testDataList.join(""));
+                $('#current-word').html(currentWord);
+                $('#correct-words').html("");
+                $('#data-source').html(dataSource);
+                correctWords = [];
+                $('#txtTextEntryBox').prop('readonly', false);
+                $('#txtTextEntryBox').val('').focus();
+            }
+            if (!testInProgress) {
+                clearInterval(timer);
+            } else {
+                var minutes = Math.floor(counter / 60);
+                var seconds = counter - minutes * 60;
+                if (seconds < 10) {
+                    seconds = "0" + seconds;
+                }
+                var output = minutes + ":" + seconds;
+                $('#time-left').html(output);
+                counter--;
+                _timeElapsed++;
+            }
+            if (counter < 0) {
+                clearInterval(timer);
+                endTest();
+            }
+        }, 1000);
+    }
+
+
+    var userInput = $('#txtTextEntryBox');
+
+    userInput.on('input', function (e) {
+        if (testInProgress) {
+            if (userInput.val() == currentWord) {
+                correctWords.push(currentWord);
+                if (testDataList[0] != null) {
+                    currentWord = testDataList.shift();
+                } else {
+                    endTest();
+                    currentWord = "";
+                }
+                userInput.val("");
+                $("#untyped-words").html(testDataList.join(""));
+                $("#correct-words").html(correctWords.join(""));
+                $("#current-word").html(currentWord);
+            }
+            $('#user-speed').html(CalculateWPM());
         }
-        $('#user-speed').html(CalculateWPM());
-    }
-}
+    });
 
-function CalculateWPM() {
-    var typedEntries = correctWords.join("");
-    var minutesElapsed = timeElapsed * (1 / 60);
-    if (minutesElapsed > 0) {
-        var tmp = (typedEntries.length / 5) / minutesElapsed;
-        var wpm = round(tmp, 2);
+    function CalculateWPM() {
+        var typedEntries = correctWords.join("");
+        var minutesElapsed = _timeElapsed * (1 / 60);
+        if (minutesElapsed > 0) {
+            var tmp = (typedEntries.length / 5) / minutesElapsed;
+            var wpm = round(tmp, 2);
+        }
+        return wpm;
     }
-    return wpm;
-}
 
-function round(value, decimals) { // http://www.jacklmoore.com/notes/rounding-in-javascript/
-    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
-}
+    function round(value, decimals) { // http://www.jacklmoore.com/notes/rounding-in-javascript/
+        return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+    }
+});

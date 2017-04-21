@@ -1,5 +1,4 @@
-﻿@*@model SpeedTyper.DataObjects.TestData*@
-@{
+﻿@{
     Layout = null;
 }
 @Scripts.Render("~/bundles/jquerysignlr")
@@ -7,7 +6,6 @@
 <script src="~/signalr/hubs"></script>
 
 @Scripts.Render("~/bundles/testtaker")
-
 <div class="form-group">
     <div id="test-statistics">
         <label for="user-speed">Your Speed:</label>
@@ -20,7 +18,7 @@
     </div>
     <p id="data-source"></p><br />
     <div>
-        <input class="form-control" id="txtTextEntryBox" name="txtTextEntryBox" type="text" onchange="processInput();" onpaste="this.onchange();" oninput="this.onchange();" style="display:inline" readonly="readonly"/>
+        <input class="form-control" id="txtTextEntryBox" name="txtTextEntryBox" type="text" style="display:inline" readonly="readonly"/>
         <input class="btn btn-primary" type="button" id="start-test" value="Start Test"  />
     </div>
 </div>
