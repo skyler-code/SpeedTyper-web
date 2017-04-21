@@ -26,7 +26,14 @@
                     source = "../Content/Icons/Rank" + item.RankID + ".png";
                 }
                 @{ var rankName = rankList.Find(r => r.RankID == item.RankID).RankName;}
-                <img src=@source alt="@rankName" title="@rankName" />
+                @if (item.RankID > 0)
+                {
+                    <img src=@source alt="@rankName" title="@rankName" />
+                }
+                else
+                {
+                    @rankName
+                }
             </td>
             <td>@Html.DisplayFor(modelItem => item.WPM)</td>
             <td>@Html.DisplayFor(modelItem => item.Date)</td>
