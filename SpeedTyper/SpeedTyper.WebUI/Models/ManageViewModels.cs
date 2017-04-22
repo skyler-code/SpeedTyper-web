@@ -61,7 +61,7 @@ namespace SpeedTyper.WebUI.Models
     public class ChangeDisplayNameViewModel
     {
         [Required]
-        [DataType(DataType.Text)]
+        [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
         [Display(Name = "New display name")]
         public string DisplayName { get; set; }
 

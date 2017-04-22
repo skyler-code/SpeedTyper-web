@@ -31,17 +31,19 @@ namespace SpeedTyper.WebUI.Controllers
             {
                 _user = userManager.CreateGuestUser();
             }
-
             var playerRank = Infrastructure.CacheManager.CachedRanks().Find(r => r.RankID == _user.RankID).RankName;
+            int previousLevelXPToLevel;
             string greeting = "";
             if (!_user.IsGuest)
             {
                 greeting = playerRank + " " + _user.DisplayName;
-            } else
+                previousLevelXPToLevel = levelManager.RetrieveXPForLevel(_user.Level);
+            }
+            else
             {
                 greeting = playerRank;
+                previousLevelXPToLevel = 0;
             }
-            var previousLevelXPToLevel = levelManager.RetrieveXPForLevel(_user.Level);
 
             var homeViewModel = new Models.HomeViewModel()
             {
