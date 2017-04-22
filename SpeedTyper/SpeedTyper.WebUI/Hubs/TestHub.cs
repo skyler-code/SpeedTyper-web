@@ -31,7 +31,7 @@ namespace SpeedTyper.WebUI.Hubs
 
         public void SubmitTest(int testID, decimal wpm, int timeElapsed)
         {
-            if (Context.User.Identity.IsAuthenticated)
+            if (Context.User.Identity.IsAuthenticated && wpm > 0)
             {
                 try
                 {

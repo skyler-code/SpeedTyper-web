@@ -9,6 +9,7 @@ var _testID;
 var startTimerCountdown = 5;
 var endTimerCountdown = 120;
 var testInProgress = false;
+var countdownInProgress = false;
 var _timeElapsed = -1;
 
 
@@ -55,7 +56,10 @@ $(function () {
     connection.start().done(function (e) {
         console.log("success");
         $('#start-test').click(function () {
-            proxy.invoke('startTest');
+            if (!countdownInProgress) {
+                proxy.invoke('startTest');
+                countdownInProgress = true;
+            }
         });
     }).fail(function (error) {
         console.log(error);
@@ -82,6 +86,7 @@ $(function () {
         var timer = setInterval(function () {
             if (counter == endTimerCountdown) {
                 testInProgress = true;
+                countdownInProgress = false;
                 _timeElapsed = -1;
                 $("#untyped-words").html(testDataList.join(""));
                 $('#current-word').html(currentWord);
