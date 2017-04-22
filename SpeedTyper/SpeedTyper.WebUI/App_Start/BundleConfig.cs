@@ -32,9 +32,6 @@ namespace SpeedTyper.WebUI
 
             bundles.Add(new ScriptBundle("~/bundles/jquerysignlr").Include(
                       "~/Scripts/jquery.signalR-{version}.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/testtaker").Include(
-                    "~/Scripts/TestTaker/testtake.js"));
 #if DEBUG
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -47,7 +44,7 @@ namespace SpeedTyper.WebUI
 #else
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/themes/jquery-ui.css",
+                      "~/Content/themes/base/jquery-ui.css",
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/testtaker").Include(
