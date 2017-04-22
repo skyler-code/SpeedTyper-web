@@ -115,6 +115,7 @@ $(function () {
                     seconds = "0" + seconds;
                 }
                 var output = minutes + ":" + seconds;
+                $('#user-speed').html(CalculateWPM());
                 $('#time-left').html(output);
                 counter--;
                 _timeElapsed++;
