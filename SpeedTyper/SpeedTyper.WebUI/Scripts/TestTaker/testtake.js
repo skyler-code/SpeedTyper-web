@@ -35,10 +35,22 @@ $(function () {
     });
 
     proxy.on('testSubmitSuccess', function (submissionString, rewardString) {
-        alert(submissionString);
-        if (rewardString != "") {
-            alert(rewardString);
-        }
+        $('#dialog-submission-message').html(submissionString.replace(/\n/g, "<br />"));
+        $('#dialog-submission').dialog({
+            modal: true,
+            closeOnEscape: false,
+            open: function(event, ui) {
+                $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+            },
+            buttons: {
+                Ok: function () {
+                    $(this).dialog("close");
+                    if (rewardString != "") {
+                        RewardDialog(rewardString.replace(/\n/g, "<br />"));
+                    }
+                }
+            }
+        });
     });
 
     proxy.on('testSubmitFailure', function (msg) {
@@ -157,6 +169,22 @@ $(function () {
             var wpm = round(tmp, 2);
         }
         return wpm;
+    }
+
+    function RewardDialog(rewardString) {
+        $('#dialog-reward-message').html(rewardString);
+        $('#dialog-reward').dialog({
+            closeOnEscape: false,
+            open: function (event, ui) {
+                $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+            },
+            modal: true,
+            buttons: {
+                Ok: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
     }
 
     function round(value, decimals) { // http://www.jacklmoore.com/notes/rounding-in-javascript/
