@@ -1,28 +1,7 @@
-﻿@model SpeedTyper.DataObjects.User
-
-@{  
-    double widthPercent = ((double)Model.CurrentXP / (double)Model.XPToLevel) * 100;
-    String widthPercentString;
-    if (widthPercent < 0 || widthPercent > 100)
-    {
-        widthPercentString = "100%";
-    }
-    else
-    {
-        widthPercentString = widthPercent + "%";
-    }
-    String xpString;
-    if(Model.XPToLevel > 0)
-    {
-        xpString = Model.CurrentXP + " / " + Model.XPToLevel;
-    } else
-    {
-        xpString = "MAX";
-    }
-}
+﻿@model SpeedTyper.WebUI.Models.ProgressBarViewModel
 
 <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="@Model.CurrentXP" aria-valuemin="0" aria-valuemax="@Model.XPToLevel" style="width: @widthPercentString">
-        <span>@xpString</span>
+    <div class="progress-bar" role="progressbar" aria-valuenow="@Model.CurrentXP" aria-valuemin="0" aria-valuemax="@Model.XPToLevel" style="width: @Model.WidthPercentString">
+        <span>@Model.XPString</span>
     </div>
 </div>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SpeedTyper.LogicLayer;
+using Microsoft.AspNet.Identity;
 
 namespace SpeedTyper.WebUI.Controllers
 {
@@ -11,9 +13,28 @@ namespace SpeedTyper.WebUI.Controllers
     #endif
     public class HomeController : Controller
     {
+        IUserManager userManager;
+        public HomeController(IUserManager _userManager)
+        {
+            userManager = _userManager;
+        }
         public ActionResult Index()
         {
-            return View();
+            DataObjects.User _user;
+            if (User.Identity.IsAuthenticated)
+            {
+                _user = userManager.RetrieveUserByUsername(User.Identity.GetUserName());
+            }
+            else
+            {
+                _user = userManager.CreateGuestUser();
+            }
+
+            var homeViewModel = new Models.HomeViewModel()
+            {
+                User = _user
+            };
+            return View(homeViewModel);
         }
 
         public ActionResult About()
