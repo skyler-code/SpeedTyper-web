@@ -58,6 +58,19 @@ namespace SpeedTyper.WebUI.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ChangeDisplayNameViewModel
+    {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "New display name")]
+        public string DisplayName { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Current password")]
+        public string CurrentPassword { get; set; }
+    }
+
     public class AddPhoneNumberViewModel
     {
         [Required]

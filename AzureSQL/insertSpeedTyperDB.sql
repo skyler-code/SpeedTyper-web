@@ -44,7 +44,7 @@ INSERT INTO [dbo].[RankInfo]
 	(12, 'Marshal'),
 	(13, 'Field Marshal'),
 	(14, 'Grand Marshal'),
-	(15, 'The King')
+	(15, 'King')
 GO
 
 print '' print '*** Inserting XPModifierInfo Records'

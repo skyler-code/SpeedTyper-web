@@ -15,15 +15,18 @@ namespace SpeedTyper.WebUI.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private LogicLayer.IUserManager _usrManager;
 
-        public ManageController()
+        public ManageController(LogicLayer.IUserManager usrManager)
         {
+            _usrManager = usrManager;
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, LogicLayer.IUserManager usrManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _usrManager = usrManager;
         }
 
         public ApplicationSignInManager SignInManager
@@ -231,7 +234,18 @@ namespace SpeedTyper.WebUI.Controllers
                 return View(model);
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<int>(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
+            bool resultSuccess = false;
+            try
+            {
+                DataObjects.User _user = _usrManager.RetrieveUserByUsername(User.Identity.GetUserName());
+                _usrManager.UpdateUser(_user.UserID, _user.DisplayName, _user.DisplayName, model.OldPassword, model.NewPassword);
+                resultSuccess = true;
+            }
+            catch (Exception)
+            {
+                resultSuccess = false;
+            }
+            if (result.Succeeded && resultSuccess)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
                 if (user != null)
@@ -241,6 +255,48 @@ namespace SpeedTyper.WebUI.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
+            return View(model);
+        }
+
+        //
+        // GET: /Manage/ChangeDisplayName
+        public ActionResult ChangeDisplayName()
+        {
+            ViewBag.Message = null;
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangeDisplayName
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeDisplayName(ChangeDisplayNameViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            bool resultSuccess = false;
+            try
+            {
+                DataObjects.User _user = _usrManager.RetrieveUserByUsername(User.Identity.GetUserName());
+                _usrManager.UpdateUser(_user.UserID, _user.DisplayName, model.DisplayName, model.CurrentPassword, model.CurrentPassword);
+                resultSuccess = true;
+            }
+            catch (Exception)
+            {
+                ViewBag.Message = "Unable to change display name. Make sure password is correct.";
+                resultSuccess = false;
+            }
+            if (resultSuccess)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeDisplayNameSuccess });
+            }
             return View(model);
         }
 
@@ -381,6 +437,7 @@ namespace SpeedTyper.WebUI.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
+            ChangeDisplayNameSuccess,
             Error
         }
 

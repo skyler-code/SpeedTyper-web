@@ -30,9 +30,20 @@ namespace SpeedTyper.WebUI.Controllers
                 _user = userManager.CreateGuestUser();
             }
 
+            var playerRank = Infrastructure.CacheManager.CachedRanks().Find(r => r.RankID == _user.RankID).RankName;
+            string greeting = "";
+            if (!_user.IsGuest)
+            {
+                greeting = playerRank + " " + _user.DisplayName;
+            } else
+            {
+                greeting = playerRank;
+            }
+
             var homeViewModel = new Models.HomeViewModel()
             {
-                User = _user
+                User = _user,
+                Greeting = greeting
             };
             return View(homeViewModel);
         }

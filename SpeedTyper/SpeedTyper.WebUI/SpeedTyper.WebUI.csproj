@@ -325,6 +325,7 @@
     <Content Include="Views\Leaderboards\HighestRankingMembers.cshtml" />
     <Content Include="Views\TestTaker\DisplayTest.cshtml" />
     <Content Include="Views\ProgressBar\ProgressBar.cshtml" />
+    <Content Include="Views\Manage\ChangeDisplayName.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
