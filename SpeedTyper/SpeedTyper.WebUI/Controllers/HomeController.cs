@@ -14,9 +14,11 @@ namespace SpeedTyper.WebUI.Controllers
     public class HomeController : Controller
     {
         IUserManager userManager;
-        public HomeController(IUserManager _userManager)
+        ILevelManager levelManager;
+        public HomeController(IUserManager _userManager, ILevelManager _levelManager)
         {
             userManager = _userManager;
+            levelManager = _levelManager;
         }
         public ActionResult Index()
         {
@@ -39,11 +41,13 @@ namespace SpeedTyper.WebUI.Controllers
             {
                 greeting = playerRank;
             }
+            var previousLevelXPToLevel = levelManager.RetrieveXPForLevel(_user.Level);
 
             var homeViewModel = new Models.HomeViewModel()
             {
                 User = _user,
-                Greeting = greeting
+                Greeting = greeting,
+                PreviousLevelXPToLevel = previousLevelXPToLevel
             };
             return View(homeViewModel);
         }

@@ -4,11 +4,11 @@
 }
 
 <div class="jumbotron">
-    <h2>Welcome, @Model.Greeting!</h2>
+    <h2 id="greeting">Welcome, @Model.Greeting!</h2>
     <h3>Press 'Start Test' to start a typing test!</h3>
     @Html.Action("DisplayTest", "TestTaker")
     @if (Request.IsAuthenticated)
     {
-        @Html.Action("ProgressBar", "ProgressBar", new { currentXP = Model.User.CurrentXP, xpToLevel = Model.User.XPToLevel})
+        @Html.Action("ProgressBar", "ProgressBar", new { currentXP = Model.User.CurrentXP, xpToLevel = Model.User.XPToLevel, previousLevelXPToLevel = Model.PreviousLevelXPToLevel})
     }
 </div>

@@ -47,11 +47,12 @@ namespace SpeedTyper.WebUI.Hubs
                                     "Time Modifier = " + timeXPModifier + "\n" +
                                     testResult.WPM + " x (" + wpmXPModifier + " + " + timeXPModifier + ") = " + earnedXP;
 
-                    var appliedXPTuple = userManager.UserLevelingHandler(userManager.RetrieveUserByID(user.UserID), earnedXP);
+                    var appliedXPTuple = userManager.UserLevelingHandler(user, earnedXP);
                     user = appliedXPTuple.Item1;
                     int levelsGained = appliedXPTuple.Item2;
                     bool titlesEarned = appliedXPTuple.Item3;
                     string rewardString = "";
+                    var rankName = Infrastructure.CacheManager.CachedRanks().Find(r => r.RankID == user.RankID).RankName;
 
                     if (levelsGained > 0 || titlesEarned == true)
                     {
@@ -62,14 +63,19 @@ namespace SpeedTyper.WebUI.Hubs
                         else if (levelsGained == 1)
                         {
                             rewardString = "You have leveled up!\nYou are now level " + user.Level +
-                                           "\nYou have earned the rank: " + Infrastructure.CacheManager.CachedRanks().Find(r => r.RankID == user.RankID).RankName;
+                                           "\nYou have earned the rank: " + rankName;
                         }
                         else
                         {
-                            rewardString = "You have earned the rank: " + Infrastructure.CacheManager.CachedRanks().Find(r => r.RankID == user.RankID).RankName;
+                            rewardString = "You have earned the rank: " + rankName;
                         }
                     }
+                    var previousLevelXPToLevel = levelManager.RetrieveXPForLevel(user.Level);
+                    var xpString = Infrastructure.DisplayHelpers.ProgressBarXP(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
+                    var widthPercentString = Infrastructure.DisplayHelpers.ProgressBarWidthPercent(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
+                    var greeting = "Welcome, " + rankName + " " + user.DisplayName + "!";
                     Clients.Caller.testSubmitSuccess(submissionString, rewardString);
+                    Clients.Caller.updatePage(user.CurrentXP, user.XPToLevel, xpString, widthPercentString, greeting);
                 }
                 catch (Exception ex)
                 {

@@ -19,35 +19,14 @@ namespace SpeedTyper.WebUI.Controllers
             _userManager = userManager;
         }
         // GET: ProgressBar
-        public PartialViewResult ProgressBar(int currentXP, int xpToLevel)
+        public PartialViewResult ProgressBar(int currentXP, int xpToLevel, int previousLevelXPToLevel)
         {
-
-            double widthPercent = ((double)currentXP / (double)xpToLevel) * 100;
-            string widthPercentString;
-            string xpString;
-            if (widthPercent < 0 || widthPercent > 100)
-            {
-                widthPercentString = "100%";
-            }
-            else
-            {
-                widthPercentString = widthPercent + "%";
-            }
-            if (xpToLevel > 0)
-            {
-                xpString = currentXP + " / " + xpToLevel;
-            }
-            else
-            {
-                xpString = "MAX";
-            }
-
             var progressBarModel = new ProgressBarViewModel()
             {
                 CurrentXP = currentXP,
                 XPToLevel = xpToLevel,
-                XPString = xpString,
-                WidthPercentString = widthPercentString
+                XPString = Infrastructure.DisplayHelpers.ProgressBarXP(currentXP, xpToLevel, previousLevelXPToLevel),
+                WidthPercentString = Infrastructure.DisplayHelpers.ProgressBarWidthPercent(currentXP, xpToLevel, previousLevelXPToLevel)
             };
             return PartialView(progressBarModel);
         }

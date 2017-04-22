@@ -1,7 +1,7 @@
 ﻿@model SpeedTyper.WebUI.Models.ProgressBarViewModel
 
 <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="@Model.CurrentXP" aria-valuemin="0" aria-valuemax="@Model.XPToLevel" style="width: @Model.WidthPercentString">
-        <span>@Model.XPString</span>
+    <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="@Model.CurrentXP" aria-valuemin="0" aria-valuemax="@Model.XPToLevel" style="width: @Model.WidthPercentString">
+        <span id="progress-bar-span">@Model.XPString</span>
     </div>
 </div>

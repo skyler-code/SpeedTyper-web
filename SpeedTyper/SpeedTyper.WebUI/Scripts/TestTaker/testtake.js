@@ -45,6 +45,16 @@ $(function () {
         alert(msg);
     });
 
+    proxy.on('updatePage', function (currentXP, xpToLevel, xpString, widthPercentString, greeting) {
+        $('#progress-bar').attr({
+            "aria-valuenow" : currentXP,
+            "aria-valuemax": xpToLevel,
+            style : "width: " + widthPercentString
+        });
+        $('#progress-bar-span').html(xpString);
+        $('#greeting').html(greeting);
+    });
+
     function endTest() {
         $('#user-speed').html(CalculateWPM());
         testInProgress = false;
