@@ -52,14 +52,16 @@ GO
 INSERT INTO [dbo].[XPModifierInfo]
 	([ModifierType], [RequiredValue], [ModifierValue])
 	VALUES
-	("wpm", 0.0, 1.0),
-	("wpm", 50.0, 1.5),
-	("wpm", 70.0, 2.0),
-	("wpm", 100.0, 3.0),
-	("time", 7.0, 3.0),
-	("time", 12.0, 2.0),
-	("time", 20.0, 1.5),
-	("time", 200.0, 1.0)
+	('wpm', 0.0, 1.0),
+	('wpm', 30.0, 1.5),
+	('wpm', 50.0, 2.0),
+	('wpm', 65.0, 2.5),
+	('wpm', 80.0, 3.0),
+	('wpm', 115.0, 4.0),
+	('time', 10.0, 3.0),
+	('time', 15.0, 2.0),
+	('time', 25.0, 1.5),
+	('time', 9999.0, 1.0)
 GO
 
 		
