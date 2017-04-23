@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlClient;
+using System.Configuration;
 
 namespace SpeedTyper.DataAccess
 {
@@ -8,10 +9,10 @@ namespace SpeedTyper.DataAccess
         {
             string connString;
 #if DEBUG
-            connString = @"Data Source=localhost;Initial Catalog=SpeedTyperDB;Integrated Security=True";
+            connString = ConfigurationManager.ConnectionStrings["LocalSpeedTyperDB"].ConnectionString;
 #else
 
-            connString = @"Server=tcp:speedtyper.database.windows.net,1433;Initial Catalog=SpeedTyperDB;Persist Security Info=False;User ID=reader;Password=SpeedPass1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            connString = ConfigurationManager.ConnectionStrings["AzureSpeedTyperDB"].ConnectionString;
 #endif
             var conn = new SqlConnection(connString);
             return conn;
