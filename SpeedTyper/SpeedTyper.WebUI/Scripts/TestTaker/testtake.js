@@ -39,7 +39,7 @@ $(function () {
         $('#dialog-submission').dialog({
             modal: true,
             closeOnEscape: false,
-            open: function(event, ui) {
+            open: function (event, ui) {
                 $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
             },
             buttons: {
@@ -59,9 +59,9 @@ $(function () {
 
     proxy.on('updatePage', function (currentXP, xpToLevel, xpString, widthPercentString, greeting) {
         $('#progress-bar').attr({
-            "aria-valuenow" : currentXP,
+            "aria-valuenow": currentXP,
             "aria-valuemax": xpToLevel,
-            style : "width: " + widthPercentString
+            style: "width: " + widthPercentString
         });
         $('#progress-bar-span').html(xpString);
         $('#greeting').html(greeting);

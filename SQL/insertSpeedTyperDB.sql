@@ -102,4 +102,14 @@ INSERT INTO [dbo].[TestData]
 		('Is this the real life? Is this just fantasy? Caught in a landslide, no escape from reality. Open your eyes, look up to the skies and see. I''m just a poor boy, I need no sympathy. Because I''m easy come, easy go, little high, little low. Any way the wind blows doesn''t really matter to me.', '- from Bohemian Rhapsody, a song by Queen'),
 		('That day, for no particular reason, I decided to go for a little run. So I ran to the end of the road. And when I got there, I thought maybe I''d run to the end of town. And when I got there, I thought maybe I''d just run across Greenbow County. And I figured, since I run this far, maybe I''d just run across the great state of Alabama.', '- from Forrest Gump, a movie directed by Robert Zemeckis'),
 		('The world of typing has changed. In the 1970s, every business had rooms full of secretaries whose job it was to type letters that had been hand-written. They were copying the writing into a more readable format. In the early 1980s, the personal computer became a common office machine.', '- from Keyboarding Made Simple (1985), a book by Leigh E. Zeitz, Ph.D.')
-GO			
+GO
+
+print '' print '*** Inserting Guest User'
+GO
+SET IDENTITY_INSERT [dbo].[Users] ON
+INSERT INTO [dbo].[Users]
+	([UserID], [UserName], [DisplayName], [PasswordHash], [RankID], [Level], [CurrentXP])
+	VALUES
+	(0, 'Guest', 'Guest', '434b6a987ae0f93459eb523a52a64d93f5a25dc082a4d569b0db90b0af25f069' , 0, 0, 0)
+GO
+SET IDENTITY_INSERT Users OFF		

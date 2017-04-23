@@ -31,59 +31,72 @@ namespace SpeedTyper.WebUI.Hubs
 
         public void SubmitTest(int testID, decimal wpm, int timeElapsed)
         {
-            if (Context.User.Identity.IsAuthenticated && wpm > 0)
+            if (wpm > 0)
             {
-                try
+                if (Context.User.Identity.IsAuthenticated && wpm > 0)
                 {
-                    var user = userManager.RetrieveUserByUsername(Context.User.Identity.GetUserName());
-                    TestResult testResult = testManager.SaveTestResults(user.UserID, testID, wpm, timeElapsed);
-                    var wpmXPModifier = levelManager.GetWPMXPModifier(wpm);
-                    var timeXPModifier = levelManager.GetTimeXPModifier((decimal)timeElapsed);
-                    var earnedXP = levelManager.CalculateXP(wpm, wpmXPModifier, timeXPModifier);
-
-                    string submissionString = "You have earned " + earnedXP + " XP!\n" +
-                                    "WPM = " + testResult.WPM + "\n" +
-                                    "WPM Modifier = " + wpmXPModifier + "\n" +
-                                    "Time Modifier = " + timeXPModifier + "\n" +
-                                    testResult.WPM + " x (" + wpmXPModifier + " + " + timeXPModifier + ") = " + earnedXP;
-
-                    var appliedXPTuple = userManager.UserLevelingHandler(user, earnedXP);
-                    user = appliedXPTuple.Item1;
-                    int levelsGained = appliedXPTuple.Item2;
-                    bool titlesEarned = appliedXPTuple.Item3;
-                    string rewardString = "";
-                    var rankName = Infrastructure.CacheManager.CachedRanks().Find(r => r.RankID == user.RankID).RankName;
-
-                    if (levelsGained > 0 || titlesEarned == true)
+                    try
                     {
-                        if (levelsGained > 1)
+                        var user = userManager.RetrieveUserByUsername(Context.User.Identity.GetUserName());
+                        TestResult testResult = testManager.SaveTestResults(user.UserID, testID, wpm, timeElapsed);
+                        var wpmXPModifier = levelManager.GetWPMXPModifier(wpm);
+                        var timeXPModifier = levelManager.GetTimeXPModifier((decimal)timeElapsed);
+                        var earnedXP = levelManager.CalculateXP(wpm, wpmXPModifier, timeXPModifier);
+
+                        string submissionString = "You have earned " + earnedXP + " XP!\n" +
+                                        "WPM = " + testResult.WPM + "\n" +
+                                        "WPM Modifier = " + wpmXPModifier + "\n" +
+                                        "Time Modifier = " + timeXPModifier + "\n" +
+                                        testResult.WPM + " x (" + wpmXPModifier + " + " + timeXPModifier + ") = " + earnedXP;
+
+                        var appliedXPTuple = userManager.UserLevelingHandler(user, earnedXP);
+                        user = appliedXPTuple.Item1;
+                        int levelsGained = appliedXPTuple.Item2;
+                        bool titlesEarned = appliedXPTuple.Item3;
+                        string rewardString = "";
+                        var rankName = Infrastructure.CacheManager.CachedRanks().Find(r => r.RankID == user.RankID).RankName;
+
+                        if (levelsGained > 0 || titlesEarned == true)
                         {
-                            rewardString = "Wow! Somehow, you managed to earn more than 1 level. Congrats!";
+                            if (levelsGained > 1)
+                            {
+                                rewardString = "Wow! Somehow, you managed to earn more than 1 level. Congrats!";
+                            }
+                            else if (levelsGained == 1)
+                            {
+                                rewardString = "You have leveled up!\nYou are now level " + user.Level +
+                                               "\nYou have earned the rank: " + rankName;
+                            }
+                            else
+                            {
+                                rewardString = "You have earned the rank: " + rankName;
+                            }
                         }
-                        else if (levelsGained == 1)
-                        {
-                            rewardString = "You have leveled up!\nYou are now level " + user.Level +
-                                           "\nYou have earned the rank: " + rankName;
-                        }
-                        else
-                        {
-                            rewardString = "You have earned the rank: " + rankName;
-                        }
+                        var previousLevelXPToLevel = levelManager.RetrieveXPForLevel(user.Level);
+                        var xpString = Infrastructure.DisplayHelpers.ProgressBarXP(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
+                        var widthPercentString = Infrastructure.DisplayHelpers.ProgressBarWidthPercent(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
+                        var greeting = "Welcome, " + rankName + " " + user.DisplayName + "!";
+                        Clients.Caller.testSubmitSuccess(submissionString, rewardString);
+                        Clients.Caller.updatePage(user.CurrentXP, user.XPToLevel, xpString, widthPercentString, greeting);
                     }
-                    var previousLevelXPToLevel = levelManager.RetrieveXPForLevel(user.Level);
-                    var xpString = Infrastructure.DisplayHelpers.ProgressBarXP(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
-                    var widthPercentString = Infrastructure.DisplayHelpers.ProgressBarWidthPercent(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
-                    var greeting = "Welcome, " + rankName + " " + user.DisplayName + "!";
-                    Clients.Caller.testSubmitSuccess(submissionString, rewardString);
-                    Clients.Caller.updatePage(user.CurrentXP, user.XPToLevel, xpString, widthPercentString, greeting);
+                    catch (Exception ex)
+                    {
+                        Clients.Caller.testSubmitFailure(ex.Message);
+                    }
                 }
-                catch (Exception ex)
+                else // Allow guests to submit scores
                 {
-                    Clients.Caller.testSubmitFailure(ex.Message);
+                    try
+                    {
+                        testManager.SaveTestResults(userManager.CreateGuestUser().UserID, testID, wpm, timeElapsed);
+                        Clients.Caller.testSubmitSuccess("Great job! You typed " + wpm + " wpm for " + timeElapsed + " seconds!\nRemember you must register to earn XP and titles!", "");
+                    } catch(Exception ex)
+                    {
+                        Clients.Caller.testSubmitFailure(ex.Message);
+                    }
                 }
-
-
             }
         }
+
     }
 }

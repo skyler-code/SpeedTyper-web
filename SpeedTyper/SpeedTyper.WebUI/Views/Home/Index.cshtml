@@ -8,7 +8,7 @@
     <h3>Press 'Start Test' to start a typing test!</h3>
     @if (!Request.IsAuthenticated)
     {
-        <h5>You can take tests as a guest, but you must register/login to submit to the leaderboard!</h5>
+        <h5>You can take tests as a guest, but you must register/login to earn experience and titles!</h5>
     }
     @Html.Action("DisplayTest", "TestTaker")
     @if (Request.IsAuthenticated)
