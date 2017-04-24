@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity;
 
 namespace SpeedTyper.WebUI.Controllers
 {
+
+    [ChildActionOnly]
     public class TestTakerController : Controller
     {
         ITestManager _testManager;
@@ -17,11 +19,11 @@ namespace SpeedTyper.WebUI.Controllers
             _testManager = testManager;
             _userManager = userManager;
         }
-
+        
         // GET: TestTaker
-        public ActionResult DisplayTest()
+        public PartialViewResult DisplayTest()
         {
-            return View();
+            return PartialView();
         }
     }
 }

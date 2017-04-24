@@ -10,6 +10,7 @@ using SpeedTyper.WebUI.Models;
 namespace SpeedTyper.WebUI.Controllers
 {
     [Authorize]
+    [ChildActionOnly]
     public class ProgressBarController : Controller
     {
         IUserManager _userManager;
@@ -18,6 +19,7 @@ namespace SpeedTyper.WebUI.Controllers
         {
             _userManager = userManager;
         }
+
         // GET: ProgressBar
         public PartialViewResult ProgressBar(int currentXP, int xpToLevel, int previousLevelXPToLevel)
         {

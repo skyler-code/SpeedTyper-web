@@ -37,6 +37,7 @@ namespace SpeedTyper.WebUI.Controllers
             }
         }
 
+        [ChildActionOnly]
         public PartialViewResult AllTopResults()
         {
             var topResults = new LeaderboardViewModels.TestResultsModel()
@@ -47,6 +48,7 @@ namespace SpeedTyper.WebUI.Controllers
             return PartialView("TestResults", topResults);
         }
 
+        [ChildActionOnly]
         public PartialViewResult Top30DaysResults()
         {
             var topResults = new LeaderboardViewModels.TestResultsModel()
@@ -57,6 +59,7 @@ namespace SpeedTyper.WebUI.Controllers
             return PartialView("TestResults", topResults);
         }
 
+        [ChildActionOnly]
         public PartialViewResult Top90DaysResults()
         {
             var topResults = new LeaderboardViewModels.TestResultsModel()
@@ -67,6 +70,7 @@ namespace SpeedTyper.WebUI.Controllers
             return PartialView("TestResults", topResults);
         }
 
+        [ChildActionOnly]
         public PartialViewResult TodaysResults()
         {
             var topResults = new LeaderboardViewModels.TestResultsModel()
@@ -77,6 +81,7 @@ namespace SpeedTyper.WebUI.Controllers
             return PartialView("TestResults", topResults);
         }
 
+        [ChildActionOnly]
         public PartialViewResult HighestRankingMembers()
         {
             var topResults = new LeaderboardViewModels.HighestRankedPlayersModel
