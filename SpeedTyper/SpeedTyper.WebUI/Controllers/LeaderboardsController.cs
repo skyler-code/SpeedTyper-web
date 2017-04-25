@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web;
-using System.Web.Mvc;
-using SpeedTyper.DataObjects;
+﻿using System.Web.Mvc;
 using SpeedTyper.LogicLayer;
 using SpeedTyper.WebUI.Models;
 using SpeedTyper.WebUI.Infrastructure;
@@ -15,13 +12,11 @@ namespace SpeedTyper.WebUI.Controllers
     {
         ITestManager _testManager;
         IUserManager _userManager;
-        IRankManager _rankManager;
 
-        public LeaderboardsController(ITestManager testManager, IUserManager userManager, IRankManager rankManager)
+        public LeaderboardsController(ITestManager testManager, IUserManager userManager)
         {
             _testManager = testManager;
             _userManager = userManager;
-            _rankManager = rankManager;
         }
 
         // GET: TestResults

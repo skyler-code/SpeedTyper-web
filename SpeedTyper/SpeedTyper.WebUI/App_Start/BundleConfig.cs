@@ -1,7 +1,4 @@
-﻿using SpeedTyper.WebUI.Infrastructure;
-using System;
-using System.IO;
-using System.Web;
+﻿using System.IO;
 using System.Web.Hosting;
 using System.Web.Optimization;
 

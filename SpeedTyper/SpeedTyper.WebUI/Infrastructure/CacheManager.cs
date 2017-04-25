@@ -1,7 +1,5 @@
 ﻿using SpeedTyper.DataObjects;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using SpeedTyper.LogicLayer;
 
