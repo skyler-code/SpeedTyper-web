@@ -68,6 +68,13 @@ textarea{
 .table{
     background-color: white;
 }
+.table th {
+    text-align : center;
+}
+
+.table td {
+    text-align: center;
+}
 
 .jumbotron{
     margin-top: 20px;
