@@ -52,6 +52,19 @@ textarea{
     border-color: dimgrey;
 }
 
+#rank-info{
+    max-width: 50%;
+    margin: 0 auto;
+}
+
+.rank-info-text{
+    text-align: center;
+}
+
+#blizz-text{
+    font-size: 12px;
+}
+
 .table{
     background-color: white;
 }

@@ -369,6 +369,7 @@
     <Content Include="Views\TestTaker\DisplayTest.cshtml" />
     <Content Include="Views\ProgressBar\ProgressBar.cshtml" />
     <Content Include="Views\Manage\ChangeDisplayName.cshtml" />
+    <Content Include="Views\Home\RankInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

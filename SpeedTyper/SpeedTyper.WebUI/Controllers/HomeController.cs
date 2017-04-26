@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SpeedTyper.LogicLayer;
 using Microsoft.AspNet.Identity;
+using SpeedTyper.WebUI.Infrastructure;
 
 namespace SpeedTyper.WebUI.Controllers
 {
@@ -31,13 +32,13 @@ namespace SpeedTyper.WebUI.Controllers
             {
                 _user = userManager.CreateGuestUser();
             }
-            var playerRank = Infrastructure.CacheManager.CachedRanks().Find(r => r.RankID == _user.RankID).RankName;
+            var playerRank = CacheManager.CachedRanks().Find(r => r.RankID == _user.RankID).RankName;
             int previousLevelXPToLevel;
             string greeting = "";
             if (!_user.IsGuest)
             {
                 greeting = playerRank + " " + _user.DisplayName;
-                previousLevelXPToLevel = levelManager.RetrieveXPForLevel(_user.Level);
+                previousLevelXPToLevel = CacheManager.RequiredXPForLevelList()[_user.Level];
             }
             else
             {
@@ -62,6 +63,19 @@ namespace SpeedTyper.WebUI.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+
+        public PartialViewResult RankInfo()
+        {
+            var _rankList = new List<DataObjects.Rank>();
+            _rankList.AddRange(CacheManager.CachedRanks());
+            _rankList.Reverse();
+            var rankInfoView = new Models.RankViewModel()
+            {
+                RankList = _rankList,
+                RequiredXPList = CacheManager.RequiredXPForLevelList()
+            };
+            return PartialView(rankInfoView);
         }
     }
 }

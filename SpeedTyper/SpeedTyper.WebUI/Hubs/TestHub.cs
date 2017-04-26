@@ -4,6 +4,7 @@ using SpeedTyper.LogicLayer;
 using SpeedTyper.DataObjects;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.Identity;
+using SpeedTyper.WebUI.Infrastructure;
 
 namespace SpeedTyper.WebUI.Hubs
 {
@@ -69,9 +70,9 @@ namespace SpeedTyper.WebUI.Hubs
                                 rewardString = "You have earned the rank: " + rankName;
                             }
                         }
-                        var previousLevelXPToLevel = levelManager.RetrieveXPForLevel(user.Level);
-                        var xpString = Infrastructure.DisplayHelpers.ProgressBarXP(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
-                        var widthPercentString = Infrastructure.DisplayHelpers.ProgressBarWidthPercent(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
+                        var previousLevelXPToLevel = CacheManager.RequiredXPForLevelList()[user.Level];
+                        var xpString = DisplayHelpers.ProgressBarXP(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
+                        var widthPercentString = DisplayHelpers.ProgressBarWidthPercent(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
                         var greeting = "Welcome, " + rankName + " " + user.DisplayName + "!";
                         Clients.Caller.testSubmitSuccess(submissionString, rewardString);
                         Clients.Caller.updatePage(user.CurrentXP, user.XPToLevel, xpString, widthPercentString, greeting);

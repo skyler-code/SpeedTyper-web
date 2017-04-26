@@ -1,0 +1,35 @@
+﻿@model SpeedTyper.WebUI.Models.RankViewModel
+<p class="rank-info-text">Below you can see the SpeedTyper ranking system.<br /> Only one level 15 player with the most experience will be crowned King.</p>
+<table id="rank-info" class="table table-hover">
+    <tr>
+        <th>Level</th>
+        <th>Rank Icon</th>
+        <th>Rank Name</th>
+        <th>Required Total XP</th>
+    </tr>
+    @foreach (var rank in Model.RankList)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => rank.RankID)</td>
+            <td>
+                @{var source = "";}
+                @if (rank.RankID < 10)
+                {
+                    source = "../Content/Icons/Rank0" + rank.RankID + ".png";
+                }
+                else
+                {
+                    source = "../Content/Icons/Rank" + rank.RankID + ".png";
+                }
+                @if (rank.RankID > 0)
+                {
+                    <img src=@source alt="@rank.RankName" title="@rank.RankName" />
+                }
+            </td>
+            <td>@Html.DisplayFor(modelItem => rank.RankName)</td>
+                @{ int requiredXP = Model.RequiredXPList[rank.RankID];}
+            <td>@requiredXP</td>
+        </tr>
+     }
+</table>
+<p id="blizz-text" class="rank-info-text">Rank Icons are property of Blizzard Entertainment&reg;</p>
