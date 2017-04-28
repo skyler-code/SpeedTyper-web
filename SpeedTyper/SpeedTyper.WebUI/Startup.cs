@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using Microsoft.AspNet.SignalR;
 
 [assembly: OwinStartupAttribute(typeof(SpeedTyper.WebUI.Startup))]
 namespace SpeedTyper.WebUI
@@ -11,11 +12,12 @@ namespace SpeedTyper.WebUI
             ConfigureAuth(app);
 
             // Add DI for TestHub
-            Microsoft.AspNet.SignalR.GlobalHost.DependencyResolver.Register(typeof(Hubs.TestHub),() => new Hubs.TestHub(new LogicLayer.TestManager(),
-                                                                                                                        new LogicLayer.UserManager(), 
-                                                                                                                        new LogicLayer.LevelManager()
-                                                                                                                        ));
+            GlobalHost.DependencyResolver.Register(typeof(Hubs.TestHub),() => new Hubs.TestHub(new LogicLayer.TestManager(),
+                                                                                               new LogicLayer.UserManager(), 
+                                                                                               new LogicLayer.LevelManager()
+                                                                                               ));
             app.MapSignalR();
+            GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;
         }
     }
 }
