@@ -5,6 +5,8 @@ using SpeedTyper.DataObjects;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.Identity;
 using SpeedTyper.WebUI.Infrastructure;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SpeedTyper.WebUI.Hubs
 {
@@ -14,6 +16,7 @@ namespace SpeedTyper.WebUI.Hubs
         ITestManager testManager;
         IUserManager userManager;
         ILevelManager levelManager;
+        private int endTimerCountdown = 120;
         public TestHub(ITestManager _testManager, IUserManager _userManager, ILevelManager _levelManager)
         {
             testManager = _testManager;
@@ -24,11 +27,23 @@ namespace SpeedTyper.WebUI.Hubs
         public void StartTest()
         {
             TestData testData = testManager.RetrieveRandomTest();
-            Clients.Caller.beginTest(testData.TestDataText, testData.DataSource, testData.TestID);
+            Clients.Caller.beginTest(testData.TestDataText, testData.DataSource, testData.TestID, endTimerCountdown);
+
         }
 
-        public void SubmitTest(int testID, decimal wpm, int timeElapsed)
+        public void SubmitTest(int testID, decimal wpm, int timeElapsed, int _endTimerCountdown, string testData, string dataSource, string startTime, string startTimeHash)
         {
+            TestData testVerification = testManager.RetrieveTestDataByID(testID);
+            string verifyHash = HashSHA1(startTime + testID);
+            if (_endTimerCountdown != endTimerCountdown || 
+                !testVerification.TestDataText.Equals(testData) || 
+                !testVerification.DataSource.Equals(dataSource) ||
+                timeElapsed <= 0 ||
+                !verifyHash.Equals(startTimeHash))
+            {
+                Clients.Caller.testSubmitFailure("Cheater!");
+                return;
+            }
             if (wpm > 0)
             {
                 if (Context.User.Identity.IsAuthenticated && wpm > 0)
@@ -52,9 +67,9 @@ namespace SpeedTyper.WebUI.Hubs
                         int levelsGained = appliedXPTuple.Item2;
                         bool titlesEarned = appliedXPTuple.Item3;
                         string rewardString = "";
-                        var rankName = Infrastructure.CacheManager.CachedRanks().Find(r => r.RankID == user.RankID).RankName;
+                        var rankName = CacheManager.CachedRanks().Find(r => r.RankID == user.RankID).RankName;
 
-                        if (levelsGained > 0 || titlesEarned == true)
+                        if (levelsGained > 0 || titlesEarned)
                         {
                             if (levelsGained > 1)
                             {
@@ -88,13 +103,36 @@ namespace SpeedTyper.WebUI.Hubs
                     {
                         testManager.SaveTestResults(userManager.CreateGuestUser().UserID, testID, wpm, timeElapsed);
                         Clients.Caller.testSubmitSuccess("Great job! You typed " + wpm + " wpm for " + timeElapsed + " seconds!\nRemember you must register to earn XP and titles!", "");
-                    } catch(Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         Clients.Caller.testSubmitFailure(ex.Message);
                     }
                 }
             }
+            else
+            {
+                Clients.Caller.testSubmitFailure("something went horribly wrong");
+            }
         }
+        internal string HashSHA1(string source)
+        {
+            var result = "";
+            byte[] data;
+            using (SHA1 sha1hash = SHA1.Create())
+            {
+                data = sha1hash.ComputeHash(Encoding.UTF8.GetBytes(source));
+            }
 
+            var s = new StringBuilder();
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                s.Append(data[i].ToString("x2"));
+            }
+
+            result = s.ToString();
+            return result;
+        }
     }
 }

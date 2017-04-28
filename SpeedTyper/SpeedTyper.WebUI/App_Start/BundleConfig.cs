@@ -37,7 +37,8 @@ namespace SpeedTyper.WebUI
                       "~/Content/site.css").WithLastModifiedToken());
 
             bundles.Add(new ScriptBundle("~/bundles/testtaker").Include(
-                    "~/Scripts/TestTaker/testtake.js").WithLastModifiedToken());
+                    "~/Scripts/TestTaker/testtake.js",
+                    "~/Scripts/sha1.js").WithLastModifiedToken());
 #else
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -45,7 +46,8 @@ namespace SpeedTyper.WebUI
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/testtaker").Include(
-                    "~/Scripts/TestTaker/testtake.js"));
+                    "~/Scripts/TestTaker/testtake.js",
+                    "~/Scripts/sha1.js"));
 #endif
         }
     }

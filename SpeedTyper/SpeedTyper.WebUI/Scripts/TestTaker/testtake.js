@@ -7,15 +7,16 @@ var currentWord;
 var correctWords = [];
 var _testID;
 var startTimerCountdown = 5;
-var endTimerCountdown = 120;
+var endTimerCountdown;
 var testInProgress = false;
 var countdownInProgress = false;
-var _timeElapsed = -1;
-
+var startTime;
+var stH;
 
 $(function () {
     console.log("jquery loaded");
     var connection = $.hubConnection();
+    connection.logging = true;
 
     var proxy = connection.createHubProxy('testHub');
 
@@ -23,14 +24,14 @@ $(function () {
         console.log(msg);
     });
 
-    proxy.on('beginTest', function (testDataText, _dataSource, newtestID) {
+    proxy.on('beginTest', function (testDataText, _dataSource, newtestID, _endTimerCountdown) {
         console.log("begin test");
         testInProgress = false;
         dataSource = _dataSource;
         _testID = newtestID;
+        endTimerCountdown = _endTimerCountdown;
         testDataList = testDataText.split(/\b(?![\s.])/);
         currentWord = testDataList.shift();
-        _timeElapsed = -1;
         startTestCountdown();
     });
 
@@ -72,7 +73,8 @@ $(function () {
         testInProgress = false;
         $('#txtTextEntryBox').val('Test over.').prop('readonly', true).blur();
         var _guid = $('#guid').html();
-        proxy.invoke('submitTest', _testID, CalculateWPM(), _timeElapsed);
+        _timeElapsed = (Date.now() - startTime) * (1 / 1000);
+        proxy.invoke('submitTest', _testID, CalculateWPM(), parseInt(_timeElapsed), endTimerCountdown, correctWords.join(""), dataSource, startTime.toString(), stH);
     }
 
     connection.start().done(function (e) {
@@ -107,6 +109,9 @@ $(function () {
         var counter = endTimerCountdown;
         var timer = setInterval(function () {
             if (counter == endTimerCountdown) {
+                startTime = Date.now();
+                _st = startTime.toString() + _testID.toString();
+                stH = Sha1.hash(_st);
                 testInProgress = true;
                 countdownInProgress = false;
                 _timeElapsed = -1;
@@ -130,7 +135,6 @@ $(function () {
                 $('#user-speed').html(CalculateWPM());
                 $('#time-left').html(output);
                 counter--;
-                _timeElapsed++;
             }
             if (counter < 0) {
                 clearInterval(timer);
@@ -163,7 +167,8 @@ $(function () {
 
     function CalculateWPM() {
         var typedEntries = correctWords.join("");
-        var minutesElapsed = _timeElapsed * (1 / 60);
+        var _tmptimeElapsed = Date.now() - startTime;
+        var minutesElapsed = _tmptimeElapsed * (1 / 60000);
         if (minutesElapsed > 0) {
             var tmp = (typedEntries.length / 5) / minutesElapsed;
             var wpm = round(tmp, 2);
