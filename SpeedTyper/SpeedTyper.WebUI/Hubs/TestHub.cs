@@ -31,12 +31,11 @@ namespace SpeedTyper.WebUI.Hubs
 
         }
 
-        public void SubmitTest(int testID, decimal wpm, int timeElapsed, int _endTimerCountdown, string testData, string startTime, string startTimeHash)
+        public void SubmitTest(int testID, decimal wpm, int timeElapsed, string testData, string startTime, string startTimeHash)
         {
             TestData testVerification = testManager.RetrieveTestDataByID(testID);
             string verifyHash = HashSHA1(startTime + testID);
-            if (_endTimerCountdown != endTimerCountdown || 
-                !testVerification.TestDataText.Equals(testData) ||
+            if (!testVerification.TestDataText.Equals(testData) ||
                 timeElapsed <= 0 ||
                 !verifyHash.Equals(startTimeHash))
             {

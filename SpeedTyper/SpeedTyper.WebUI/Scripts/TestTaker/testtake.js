@@ -74,7 +74,12 @@ $(function () {
         $('#txtTextEntryBox').val('Test over.').prop('readonly', true).blur();
         var _guid = $('#guid').html();
         _timeElapsed = (Date.now() - startTime) * (1 / 1000);
-        proxy.invoke('submitTest', _testID, CalculateWPM(), parseInt(_timeElapsed), endTimerCountdown, correctWords.join(""), startTime.toString(), stH);
+
+        var _wpm = CalculateWPM();
+        var words = correctWords.join("");
+        var stStr = startTime.toString();
+        var timeElapsedInt = parseInt(_timeElapsed);
+        proxy.invoke('submitTest', _testID, _wpm, timeElapsedInt, words, stStr, stH);
     }
 
     connection.start().done(function (e) {
