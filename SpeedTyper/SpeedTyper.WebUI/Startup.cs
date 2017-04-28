@@ -16,10 +16,7 @@ namespace SpeedTyper.WebUI
                                                                                                new LogicLayer.UserManager(), 
                                                                                                new LogicLayer.LevelManager()
                                                                                                ));
-
-            var hubConfiguration = new HubConfiguration();
-            hubConfiguration.EnableDetailedErrors = true;
-            app.MapSignalR(hubConfiguration);
+            app.MapSignalR();
             GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;
         }
     }
