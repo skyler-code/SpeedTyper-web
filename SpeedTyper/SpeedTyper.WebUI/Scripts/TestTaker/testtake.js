@@ -1,19 +1,18 @@
 console.log("js loaded");
 
-
-var testDataList;
-var dataSource;
-var currentWord;
-var correctWords = [];
-var _testID;
-var startTimerCountdown = 5;
-var endTimerCountdown;
-var testInProgress = false;
-var countdownInProgress = false;
-var startTime;
-var stH;
-
 $(function () {
+    var testDataList;
+    var dataSource;
+    var currentWord;
+    var correctWords = [];
+    var _testID;
+    var startTimerCountdown = 5;
+    var endTimerCountdown;
+    var testInProgress = false;
+    var countdownInProgress = false;
+    var startTime;
+    var stH;
+
     console.log("jquery loaded");
     var connection = $.hubConnection();
     connection.logging = true;
@@ -110,7 +109,7 @@ $(function () {
         var timer = setInterval(function () {
             if (counter == endTimerCountdown) {
                 startTime = Date.now();
-                _st = startTime.toString() + _testID.toString();
+                var _st = startTime.toString() + _testID.toString();
                 stH = Sha1.hash(_st);
                 testInProgress = true;
                 countdownInProgress = false;
