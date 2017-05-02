@@ -33,7 +33,7 @@ namespace SpeedTyper.WebUI.Hubs
 
         public void SubmitTest(int testID, decimal wpm, int timeElapsed, int _endTimerCountdown, string testData, string dataSource, string startTime, string startTimeHash)
         {
-            if (wpm > 0)
+            if (wpm > 0 || wpm < 250)
             {
                 if (InvalidTest(testID, startTime, _endTimerCountdown, testData, dataSource, timeElapsed, startTimeHash))
                 {
