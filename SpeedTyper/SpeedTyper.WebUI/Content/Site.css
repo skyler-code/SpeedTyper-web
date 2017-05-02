@@ -4,7 +4,7 @@
     background-color: dimgrey;
 }
 
-footer{
+footer {
     color: lightskyblue;
 }
 
@@ -27,12 +27,28 @@ select {
     max-width: 280px;
 }
 
-textarea{
+textarea {
     max-width: 100%;
 }
 
+#test-content-left {
+    width: 66%;
+    max-width: 66%;
+    float: left;
+}
+
+#test-content-right {
+    width: 33%;
+    max-width: 33%;
+    float: right;
+}
+
+#data-source {
+    font-size: 14px;
+}
+
 #test-statistics {
-    width:150px;
+    width: 150px;
     background-color: lightgray;
 }
 
@@ -44,39 +60,56 @@ textarea{
     background-color: yellow;
 }
 
-.test-data-text {
-    display:inline;
+#test-data {
+    width: 100%;
+    max-width: 100%;
+    min-height: 150px;
 }
 
-#hr-footer{
+.test-data-text {
+    display: inline;
+}
+
+#hr-footer {
     border-color: dimgrey;
 }
 
-#rank-info{
+#rank-info {
     max-width: 50%;
     margin: 0 auto;
 }
 
-.rank-info-text{
+#top-10-results table {
+    display: inline-table;
+    float: right;
+    max-width: 34%;
+}
+
+.rank-info-text {
     text-align: center;
 }
 
-#blizz-text{
+#blizz-text {
     font-size: 12px;
 }
 
-.table{
+#home-jumbotron {
+    min-height: 650px;
+}
+
+.table {
     background-color: white;
 }
-.table th {
-    text-align : center;
-}
 
-.table td {
-    text-align: center;
-}
+    .table th {
+        text-align: center;
+    }
 
-.jumbotron{
+    .table td {
+        text-align: center;
+    }
+
+.jumbotron {
     margin-top: 20px;
     padding-top: 10px;
 }
@@ -85,9 +118,14 @@ textarea{
     position: relative;
 }
 
-.progress span {
-    position: absolute;
-    display: block;
-    width: 100%;
-    color: black;
+#progress-bar{
+    min-width: 100%;
 }
+
+    .progress span {
+        min-width: 100%;
+        position: absolute;
+        display: block;
+        width: 100%;
+        color: black;
+    }

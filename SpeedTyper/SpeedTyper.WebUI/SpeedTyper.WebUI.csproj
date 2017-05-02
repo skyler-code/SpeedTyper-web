@@ -370,6 +370,7 @@
     <Content Include="Views\ProgressBar\ProgressBar.cshtml" />
     <Content Include="Views\Manage\ChangeDisplayName.cshtml" />
     <Content Include="Views\Home\RankInfo.cshtml" />
+    <Content Include="Views\Leaderboards\Last10Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

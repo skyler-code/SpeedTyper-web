@@ -3,16 +3,38 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h2 id="greeting">Welcome, @Model.Greeting!</h2>
-    <h3>Press 'Start Test' to start a typing test!</h3>
-    @if (!Request.IsAuthenticated)
-    {
-        <h5>You can take tests as a guest, but you must register/login to earn experience and titles!</h5>
-    }
-    @Html.Action("DisplayTest", "TestTaker")
-    @if (Request.IsAuthenticated)
-    {
-        @Html.Action("ProgressBar", "ProgressBar", new { currentXP = Model.User.CurrentXP, xpToLevel = Model.User.XPToLevel, previousLevelXPToLevel = Model.PreviousLevelXPToLevel})
-    }
+<div id="home-jumbotron" class="jumbotron container">
+    <div id="test-content-left">
+        <h2 id="greeting">Welcome, @Model.Greeting!</h2>
+        <h3>Press 'Start Test' to start a typing test!</h3>
+        @if (!Request.IsAuthenticated)
+        {
+            <h5>You can take tests as a guest, but you must register/login to earn experience and titles!</h5>
+        }
+        @Html.Action("DisplayTest", "TestTaker")
+        @if (Request.IsAuthenticated)
+        {
+            @Html.Action("ProgressBar", "ProgressBar", new { currentXP = Model.User.CurrentXP, xpToLevel = Model.User.XPToLevel, previousLevelXPToLevel = Model.PreviousLevelXPToLevel })
+        }
+    </div>
+    <div id="test-content-right">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#menu-top-10">Top 10 Tests</a></li>
+            @if (Request.IsAuthenticated)
+            {
+                <li><a data-toggle="tab" href="#menu-last-10">My Last 10 Tests</a></li>
+            }
+        </ul>
+        <div class="tab-content">
+            <div id="menu-top-10" class="tab-pane fade in active">
+                @Html.Action("Top10Results", "Leaderboards")
+            </div>
+            @if (Request.IsAuthenticated)
+            {
+                <div id="menu-last-10" class="tab-pane fade">
+                    @Html.Action("Last10Results", "Leaderboards", new { userID = Model.User.UserID })
+                </div>
+            }
+        </div>
+    </div>
 </div>

@@ -65,6 +65,7 @@ namespace SpeedTyper.WebUI.Controllers
             return View();
         }
 
+        [ChildActionOnly]
         public PartialViewResult RankInfo()
         {
             var _rankList = new List<DataObjects.Rank>();

@@ -2,6 +2,7 @@
 using SpeedTyper.LogicLayer;
 using SpeedTyper.WebUI.Models;
 using SpeedTyper.WebUI.Infrastructure;
+using Microsoft.AspNet.Identity;
 
 namespace SpeedTyper.WebUI.Controllers
 {
@@ -85,6 +86,27 @@ namespace SpeedTyper.WebUI.Controllers
                 Ranks = CacheManager.CachedRanks()
             };
             return PartialView("HighestRankingMembers", topResults);
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult Top10Results()
+        {
+            var topResults = new LeaderboardViewModels.TestResultsModel()
+            {
+                TopTestResults = _testManager.GetTop10TestResults(),
+                Ranks = CacheManager.CachedRanks()
+            };
+            return PartialView("TestResults", topResults);
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult Last10Results(int userID)
+        {
+            var topResults = new LeaderboardViewModels.TestResultsModel()
+            {
+                TopTestResults = _testManager.GetUserLast10TestResults(userID)
+            };
+            return PartialView("Last10Results", topResults);
         }
     }
 }

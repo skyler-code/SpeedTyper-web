@@ -1,0 +1,19 @@
+﻿@model SpeedTyper.WebUI.Models.LeaderboardViewModels.TestResultsModel
+
+<table class="table table-hover">
+    <tr>
+        <th title="Leaderboard Rank">#</th>
+        <th title="Words Per Minute">@Html.DisplayNameFor(model => model.TopTestResults.FirstOrDefault().WPM)</th>
+        <th>@Html.DisplayNameFor(model => model.TopTestResults.FirstOrDefault().Date)</th>
+    </tr>
+    @{ int count = 1;}
+    @foreach (var item in Model.TopTestResults)
+            {
+        <tr>
+            <td>@count.</td>
+            <td>@Html.DisplayFor(modelItem => item.WPM)</td>
+            <td>@Html.DisplayFor(modelItem => item.Date)</td>
+        </tr>
+        count++;
+    }
+</table>
