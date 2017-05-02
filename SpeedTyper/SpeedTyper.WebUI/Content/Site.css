@@ -94,7 +94,7 @@ textarea {
 }
 
 #home-jumbotron {
-    min-height: 650px;
+    min-height: 750px;
 }
 
 .table {
@@ -118,12 +118,7 @@ textarea {
     position: relative;
 }
 
-#progress-bar{
-    min-width: 100%;
-}
-
     .progress span {
-        min-width: 100%;
         position: absolute;
         display: block;
         width: 100%;

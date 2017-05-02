@@ -6,16 +6,17 @@
 <div id="home-jumbotron" class="jumbotron container">
     <div id="test-content-left">
         <h2 id="greeting">Welcome, @Model.Greeting!</h2>
-        <h3>Press 'Start Test' to start a typing test!</h3>
-        @if (!Request.IsAuthenticated)
-        {
-            <h5>You can take tests as a guest, but you must register/login to earn experience and titles!</h5>
-        }
-        @Html.Action("DisplayTest", "TestTaker")
         @if (Request.IsAuthenticated)
         {
             @Html.Action("ProgressBar", "ProgressBar", new { currentXP = Model.User.CurrentXP, xpToLevel = Model.User.XPToLevel, previousLevelXPToLevel = Model.PreviousLevelXPToLevel })
         }
+        <br />
+        <h3>Press 'Start Test' to start a typing test!</h3>
+        @if (!Request.IsAuthenticated)
+        {
+            <h5>You can take tests as a guest, but you must register/login to earn experience and titles!</h5>
+        }<br />
+        @Html.Action("DisplayTest", "TestTaker")
     </div>
     <div id="test-content-right">
         <ul class="nav nav-tabs">
