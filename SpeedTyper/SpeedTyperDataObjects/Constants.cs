@@ -9,7 +9,10 @@
         // password  - Minimum 8 characters at least 1 Alphabet and 1 Number with Optional Special Chars
         public static string PASSWORDREGEX = @"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!$%@#£€*?&]{8,}$"; // http://stackoverflow.com/a/21456918/7124631
 
-
-        public static System.TimeZoneInfo CENTRALTIMEINFO = System.TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+#if DEBUG
+        public static System.TimeZoneInfo TIMEZONEINFO = System.TimeZoneInfo.Utc;
+#else
+        public static System.TimeZoneInfo TIMEZONEINFO = System.TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+#endif
     }
 }

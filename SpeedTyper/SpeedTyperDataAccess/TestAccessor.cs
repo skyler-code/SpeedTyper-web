@@ -118,7 +118,7 @@ namespace SpeedTyper.DataAccess
                         RankID = reader.GetInt32(1),
                         WPM = reader.GetDecimal(2),
                         SecondsElapsed = reader.GetInt32(3),
-                        Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(4), Constants.CENTRALTIMEINFO).ToString("MMM/dd/yyyy")
+                        Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(4), Constants.TIMEZONEINFO).ToString("MMM/dd/yyyy")
                     };
                 }
                 reader.Close();
@@ -196,7 +196,7 @@ namespace SpeedTyper.DataAccess
                             RankID = reader.GetInt32(0),
                             DisplayName = reader.GetString(1),
                             WPM = reader.GetDecimal(2),
-                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(3), Constants.CENTRALTIMEINFO).ToString("MM/dd/yyyy hh:mm tt")
+                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(3), Constants.TIMEZONEINFO).ToString("MM/dd/yyyy hh:mm tt")
                         });
                     }
                 }
@@ -236,7 +236,7 @@ namespace SpeedTyper.DataAccess
                             RankID = reader.GetInt32(0),
                             DisplayName = reader.GetString(1),
                             WPM = reader.GetDecimal(2),
-                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(3), Constants.CENTRALTIMEINFO).ToString("MM/dd/yyyy hh:mm tt")
+                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(3), Constants.TIMEZONEINFO).ToString("MM/dd/yyyy hh:mm tt")
                         });
                     }
                 }
@@ -276,7 +276,7 @@ namespace SpeedTyper.DataAccess
                             RankID = reader.GetInt32(0),
                             DisplayName = reader.GetString(1),
                             WPM = reader.GetDecimal(2),
-                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(3), Constants.CENTRALTIMEINFO).ToString("MM/dd/yyyy hh:mm tt")
+                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(3), Constants.TIMEZONEINFO).ToString("MM/dd/yyyy hh:mm tt")
                         });
                     }
                 }
@@ -316,7 +316,7 @@ namespace SpeedTyper.DataAccess
                             RankID = reader.GetInt32(0),
                             DisplayName = reader.GetString(1),
                             WPM = reader.GetDecimal(2),
-                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(3), Constants.CENTRALTIMEINFO).ToString("MM/dd/yyyy hh:mm tt")
+                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(3), Constants.TIMEZONEINFO).ToString("MM/dd/yyyy hh:mm tt")
                         });
                     }
                 }
@@ -356,7 +356,7 @@ namespace SpeedTyper.DataAccess
                             RankID = reader.GetInt32(0),
                             DisplayName = reader.GetString(1),
                             WPM = reader.GetDecimal(2),
-                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(3), Constants.CENTRALTIMEINFO).ToString("MM/dd/yyyy hh:mm tt")
+                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(3), Constants.TIMEZONEINFO).ToString("MM/dd/yyyy hh:mm tt")
                         });
                     }
                 }
@@ -397,7 +397,7 @@ namespace SpeedTyper.DataAccess
                         {
                             WPM = reader.GetDecimal(0),
                             SecondsElapsed = reader.GetInt32(1),
-                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(3), Constants.CENTRALTIMEINFO).ToString("MM/dd/yyyy hh:mm tt")
+                            Date = TimeZoneInfo.ConvertTimeFromUtc(reader.GetDateTime(2), Constants.TIMEZONEINFO).ToString("MM/dd/yyyy hh:mm tt")
                         });
                     }
                 }
