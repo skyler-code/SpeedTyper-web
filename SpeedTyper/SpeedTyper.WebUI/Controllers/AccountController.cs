@@ -76,6 +76,26 @@ namespace SpeedTyper.WebUI.Controllers
                 return View(model);
             }
 
+            // If account isn't in website db, but is in speedtyper db then create the website user.
+            try
+            {
+                if (UserManager.Find(model.Username, model.Password) == null && _usrManager.AuthenticateUser(model.Username, model.Password) != null)
+                {
+                    var user = new ApplicationUser { UserName = model.Username, Email = model.Username };
+                    var _result = await UserManager.CreateAsync(user, model.Password);
+                    if (!_result.Succeeded)
+                    {
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                    }
+                }
+            } catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return View(model);
+            }
+            
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
