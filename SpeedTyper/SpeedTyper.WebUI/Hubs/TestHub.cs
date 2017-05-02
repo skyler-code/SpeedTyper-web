@@ -33,14 +33,14 @@ namespace SpeedTyper.WebUI.Hubs
 
         public void SubmitTest(int testID, decimal wpm, int timeElapsed, int _endTimerCountdown, string testData, string dataSource, string startTime, string startTimeHash)
         {
-            if (!ValidTest(testID, startTime, _endTimerCountdown, testData, dataSource, timeElapsed, startTimeHash))
-            {
-                Clients.Caller.testSubmitFailure("Cheater!");
-                return;
-            }
             if (wpm > 0)
             {
-                if (Context.User.Identity.IsAuthenticated && wpm > 0)
+                if (InvalidTest(testID, startTime, _endTimerCountdown, testData, dataSource, timeElapsed, startTimeHash))
+                {
+                    Clients.Caller.testSubmitFailure("Cheater!");
+                    return;
+                }
+                if (Context.User.Identity.IsAuthenticated)
                 {
                     try
                     {
@@ -104,13 +104,9 @@ namespace SpeedTyper.WebUI.Hubs
                     }
                 }
             }
-            else
-            {
-                Clients.Caller.testSubmitFailure("something went horribly wrong");
-            }
         }
         /// <summary>
-        /// Returns true is test is legit.
+        /// Returns true is test is fake.
         /// </summary>
         /// <param name="testID"></param>
         /// <param name="startTime"></param>
@@ -120,19 +116,19 @@ namespace SpeedTyper.WebUI.Hubs
         /// <param name="timeElapsed"></param>
         /// <param name="startTimeHash"></param>
         /// <returns></returns>
-        internal bool ValidTest(int testID, string startTime, int _endTimerCountdown, string testData, string dataSource, int timeElapsed, string startTimeHash)
+        internal bool InvalidTest(int testID, string startTime, int _endTimerCountdown, string testData, string dataSource, int timeElapsed, string startTimeHash)
         {
             TestData testVerification = testManager.RetrieveTestDataByID(testID);
             string verifyHash = HashSHA1(startTime + testID);
             if (_endTimerCountdown != endTimerCountdown ||
-                !testVerification.TestDataText.Equals(testData) ||
+                !testVerification.TestDataText.StartsWith(testData) ||
                 !testVerification.DataSource.Equals(dataSource) ||
                 timeElapsed <= 0 ||
                 !verifyHash.Equals(startTimeHash))
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         internal string HashSHA1(string source)
