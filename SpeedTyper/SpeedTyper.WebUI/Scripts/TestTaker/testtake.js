@@ -1,5 +1,3 @@
-console.log("js loaded");
-
 $(function () {
     var testDataList;
     var dataSource;
@@ -15,7 +13,6 @@ $(function () {
 
     console.log("jquery loaded");
     var connection = $.hubConnection();
-    connection.logging = true;
 
     var proxy = connection.createHubProxy('testHub');
 
@@ -24,7 +21,6 @@ $(function () {
     });
 
     proxy.on('beginTest', function (testDataText, _dataSource, newtestID, _endTimerCountdown) {
-        console.log("begin test");
         testInProgress = false;
         dataSource = _dataSource;
         _testID = newtestID;
@@ -77,7 +73,6 @@ $(function () {
     }
 
     connection.start().done(function (e) {
-        console.log("success");
         $('#start-test').click(function () {
             if (!countdownInProgress) {
                 proxy.invoke('startTest');
