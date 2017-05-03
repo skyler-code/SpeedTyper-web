@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using SpeedTyper.WebUI.Infrastructure;
 using System.Security.Cryptography;
 using System.Text;
+using System.Collections.Generic;
 
 namespace SpeedTyper.WebUI.Hubs
 {
@@ -31,8 +32,16 @@ namespace SpeedTyper.WebUI.Hubs
 
         }
 
-        public void SubmitTest(int testID, decimal wpm, int timeElapsed, int _endTimerCountdown, string testData, string dataSource, string startTime, string startTimeHash)
+        public void CalculateWPM(string correctWords, decimal secondsElapsed)
         {
+            var wpm = testManager.CalculateWPM(correctWords, secondsElapsed);
+
+            Clients.Caller.updateWPM(wpm);
+        }
+
+        public void SubmitTest(int testID, int timeElapsed, int _endTimerCountdown, string testData, string dataSource, string startTime, string startTimeHash)
+        {
+            var wpm = testManager.CalculateWPM(testData, timeElapsed);
             if (wpm > 0 || wpm < 250)
             {
                 if (InvalidTest(testID, startTime, _endTimerCountdown, testData, dataSource, timeElapsed, startTimeHash))
@@ -83,7 +92,7 @@ namespace SpeedTyper.WebUI.Hubs
                         var xpString = DisplayHelpers.ProgressBarXP(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
                         var widthPercentString = DisplayHelpers.ProgressBarWidthPercent(user.CurrentXP, user.XPToLevel, previousLevelXPToLevel);
                         var greeting = "Welcome, " + rankName + " " + user.DisplayName + "!";
-                        Clients.Caller.testSubmitSuccess(submissionString, rewardString);
+                        Clients.Caller.testSubmitSuccess(submissionString, rewardString, testResult.WPM);
                         Clients.Caller.updatePage(user.CurrentXP, user.XPToLevel, xpString, widthPercentString, greeting);
                     }
                     catch (Exception ex)
@@ -96,7 +105,7 @@ namespace SpeedTyper.WebUI.Hubs
                     try
                     {
                         testManager.SaveTestResults(userManager.CreateGuestUser().UserID, testID, wpm, timeElapsed);
-                        Clients.Caller.testSubmitSuccess("Great job! You typed " + wpm + " wpm for " + timeElapsed + " seconds!\nRemember you must register to earn XP and titles!", "");
+                        Clients.Caller.testSubmitSuccess("Great job! You typed " + wpm + " wpm for " + timeElapsed + " seconds!\nRemember you must register to earn XP and titles!", "", wpm);
                     }
                     catch (Exception ex)
                     {

@@ -5,7 +5,7 @@ namespace SpeedTyper.LogicLayer
 {
     public interface ITestManager
     {
-        decimal CalculateWPM(List<string> correctWords, decimal secondsElapsed);
+        decimal CalculateWPM(string correctWords, decimal secondsElapsed);
         List<TestResult> GetAllTopTestResults();
         List<TestResult> GetTodaysResults();
         List<TestResult> GetTop10TestResults();

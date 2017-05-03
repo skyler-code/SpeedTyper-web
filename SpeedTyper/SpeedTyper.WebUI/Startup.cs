@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using Microsoft.AspNet.SignalR;
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(SpeedTyper.WebUI.Startup))]
@@ -15,7 +16,9 @@ namespace SpeedTyper.WebUI
                                                                                                                         new LogicLayer.UserManager(), 
                                                                                                                         new LogicLayer.LevelManager()
                                                                                                                         ));
-            app.MapSignalR();
+            var hubConfiguration = new HubConfiguration();
+            hubConfiguration.EnableDetailedErrors = true;
+            app.MapSignalR(hubConfiguration);
         }
     }
 }

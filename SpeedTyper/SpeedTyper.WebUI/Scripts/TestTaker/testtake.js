@@ -13,7 +13,7 @@ $(function () {
 
     console.log("jquery loaded");
     var connection = $.hubConnection();
-
+    connection.logging = true;
     var proxy = connection.createHubProxy('testHub');
 
     proxy.on('whisper', function (msg) {
@@ -30,7 +30,14 @@ $(function () {
         startTestCountdown();
     });
 
-    proxy.on('testSubmitSuccess', function (submissionString, rewardString) {
+    proxy.on('updateWPM', function (wpm) {
+        if (testInProgress) {
+            $('#user-speed').html(wpm);
+        }
+    });
+
+    proxy.on('testSubmitSuccess', function (submissionString, rewardString, finalWPM) {
+        $('#user-speed').html(finalWPM);
         $('#dialog-submission-message').html(submissionString.replace(/\n/g, "<br />"));
         $('#dialog-submission').dialog({
             modal: true,
@@ -64,12 +71,11 @@ $(function () {
     });
 
     function endTest() {
-        $('#user-speed').html(CalculateWPM());
         testInProgress = false;
         $('#txtTextEntryBox').val('Test over.').prop('readonly', true).blur();
         var _guid = $('#guid').html();
-        _timeElapsed = (Date.now() - startTime) * (1 / 1000);
-        proxy.invoke('submitTest', _testID, CalculateWPM(), parseInt(_timeElapsed), endTimerCountdown, correctWords.join(""), dataSource, startTime.toString(), stH);
+        var elapsed = parseInt((Date.now() - startTime) * (1 / 1000));
+        proxy.invoke('submitTest', _testID, elapsed, endTimerCountdown, correctWords.join(""), dataSource, startTime.toString(), stH);
     }
 
     connection.start().done(function (e) {
@@ -126,7 +132,7 @@ $(function () {
                     seconds = "0" + seconds;
                 }
                 var output = minutes + ":" + seconds;
-                $('#user-speed').html(CalculateWPM());
+                CalculateWPM();
                 $('#time-left').html(output);
                 counter--;
             }
@@ -155,19 +161,14 @@ $(function () {
                 $("#correct-words").html(correctWords.join(""));
                 $("#current-word").html(currentWord);
             }
-            $('#user-speed').html(CalculateWPM());
+            CalculateWPM();
         }
     });
 
     function CalculateWPM() {
         var typedEntries = correctWords.join("");
-        var _tmptimeElapsed = Date.now() - startTime;
-        var minutesElapsed = _tmptimeElapsed * (1 / 60000);
-        if (minutesElapsed > 0) {
-            var tmp = (typedEntries.length / 5) / minutesElapsed;
-            var wpm = round(tmp, 2);
-        }
-        return wpm;
+        var secondsElapsed = (Date.now() - startTime) / 1000;
+        proxy.invoke('calculateWPM', typedEntries, secondsElapsed);
     }
 
     function RewardDialog(rewardString) {

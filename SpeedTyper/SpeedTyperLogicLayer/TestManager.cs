@@ -72,14 +72,13 @@ namespace SpeedTyper.LogicLayer
             return testResult;
         }
 
-        public decimal CalculateWPM(List<String> correctWords, decimal secondsElapsed)
+        public decimal CalculateWPM(string correctWords, decimal secondsElapsed)
         {
             decimal wpm = 0;
-            var typedEntries = string.Join("", correctWords.ToArray());
             var minutesElapsed = secondsElapsed * (1m / 60m);
             if (minutesElapsed > 0) // Can't divide by zero so we'll wait a second before we do anything.
             {
-                wpm = Math.Round((typedEntries.Length / 5) / minutesElapsed, 2);
+                wpm = Math.Round((correctWords.Length / 5) / minutesElapsed, 2);
             }
             return wpm;
         }
