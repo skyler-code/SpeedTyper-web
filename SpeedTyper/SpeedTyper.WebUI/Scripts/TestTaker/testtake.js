@@ -75,7 +75,7 @@ $(function () {
         $('#txtTextEntryBox').val('Test over.').prop('readonly', true).blur();
         var _guid = $('#guid').html();
         var elapsed = parseInt((Date.now() - startTime) * (1 / 1000));
-        proxy.invoke('submitTest', _testID, elapsed, endTimerCountdown, correctWords.join(""), dataSource, startTime.toString(), stH);
+        proxy.invoke('stsub', _testID, elapsed, endTimerCountdown, correctWords.join(""), dataSource, startTime.toString(), stH);
     }
 
     connection.start().done(function (e) {

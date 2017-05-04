@@ -39,6 +39,7 @@ namespace SpeedTyper.WebUI.Hubs
             Clients.Caller.updateWPM(wpm);
         }
 
+        [HubMethodName("stsub")]
         public void SubmitTest(int testID, int timeElapsed, int _endTimerCountdown, string testData, string dataSource, string startTime, string startTimeHash)
         {
             var wpm = testManager.CalculateWPM(testData, timeElapsed);
