@@ -43,7 +43,7 @@ namespace SpeedTyper.WebUI.Hubs
         public void SubmitTest(int testID, int timeElapsed, int _endTimerCountdown, string testData, string dataSource, string startTime, string startTimeHash)
         {
             var wpm = testManager.CalculateWPM(testData, timeElapsed);
-            if (wpm > 0 || wpm < 250)
+            if (wpm > 0 && wpm < 250)
             {
                 if (InvalidTest(testID, startTime, _endTimerCountdown, testData, dataSource, timeElapsed, startTimeHash))
                 {
